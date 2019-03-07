@@ -1,0 +1,66 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/Users/fabianhanselmann/repos/music/src/" . "music/")
+ ("/Users/fabianhanselmann/repos/music/" . "src/")
+ ("/Users/fabianhanselmann/" . "repos/")
+ ("/Users/fabianhanselmann/repos/clojure-highlight-defined-mode/" . "clj/")
+ ("/Users/fabianhanselmann/repos/" . "clojure-highlight-defined-mode/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/Users/fabianhanselmann/repos/music/src/music/"
+ "/Users/fabianhanselmann/"
+ "/Users/fabianhanselmann/repos/clojure-highlight-defined-mode/clj/"
+ "/Users/fabianhanselmann/repos/clojure-highlight-defined-mode/elisp/"
+ "~/repos/clojure-highlight-defined-mode/elisp/"
+ "/Users/fabianhanselmann/repos/emacsconfig/"
+ "/Users/fabianhanselmann/repos/clojure-highlight-defined-mode/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "midi.clj"
+ ".emacs.el"
+ "highlight_defined.clj"
+ "highlight-defined.el"
+ "core.clj"
+ "highlight-defined.clj"
+ "clojure"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/Users/fabianhanselmann/repos/music/src/music/" (23679 54591 536118 667000) "#core.clj#" "midi.clj" ".#core.clj" "core.clj" "core.clj~" "midi.clj~" "melody.clj" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/clojure-highlight-defined-mode/clj/" (23679 44307 896720 350000) "highlight_defined.clj" "highlight_defined.clj~" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/clojure-highlight-defined-mode/elisp/" (23679 43774 20952 602000) "highlight-defined.el" "highlight-defined.el~" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/music/" (23679 51141 827813 319000) "src/" "doc/" ".gitignore" "README.md" ".nrepl-port" "resources/" ".hgignore" "target/" "CHANGELOG.md" "test/" "LICENSE" "project.clj" "../" "./")
+
+ ("/Users/fabianhanselmann/" (23679 50385 531321 863000) ".zlogin" ".viminfo" ".bash_history" ".emacs.el~" ".cache/" "Downloads/" ".gem/" ".bash_profile" ".m2/" "Documents/" ".gervill/" ".Trash/" ".profile" ".vimrc" "Movies/" ".ssh/" "Public/" ".lein/" ".bash_sessions/" ".emacs.d/" ".emacs.el" ".lesshst" ".mkshrc" "Library/" "Desktop/" ".rvm/" ".bundle/" "Pictures/" ".NERDTreeBookmarks" ".zshrc" ".bashrc" ".subversion/" ".CFUserTextEncoding" ".DS_Store" ".vim/" "repos/" "Music/" ".config/" "../" "./")
+
+ ("~/repos/clojure-highlight-defined-mode/elisp/" (23679 39158 857730 851000) "highlight-defined.el" "highlight-defined.el~" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/emacsconfig/.emacs.d/" (23678 41788 911470 470000) "elpa/" "url/" "auto-save-list/" "projectile-bookmarks.eld" "ido.last~" "ido.last" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/emacsconfig/.emacs.d/elpa/cider-20190302.114/" (23678 45054 500992 92000) "cider-mode.elc" "cider-eval.elc" "cider-popup.el" "cider-browse-ns.el" "cider-scratch.elc" "cider-eval.el" "cider-connection.elc" "cider-doc.el" "cider-ns.elc" "cider-apropos.el" "cider-grimoire.elc" "nrepl-client.elc" "cider-popup.elc" "cider-pkg.el" "cider-browse-ns.elc" "cider-browse-spec.elc" "cider-common.elc" "cider-compat.elc" "cider-find.el" "cider-stacktrace.el" "cider-selector.el" "cider-ns.el" "cider-common.el" "cider-inspector.elc" "cider-mode.el" "cider-completion.el" "cider-format.elc" "cider-eldoc.el" "cider-client.elc" "nrepl-client.el" "cider-resolve.elc" "cider-selector.elc" "nrepl-dict.el" "cider-stacktrace.elc" "cider-cheatsheet.el" "cider-inspector.el" "cider.elc" "cider-browse-spec.el" "cider-format.el" "cider-doc.elc" "cider-profile.el" "cider-test.el" "cider-overlays.elc" "cider-overlays.el" "cider-cheatsheet.elc" "cider-repl.el" "cider-test.elc" "cider-autoloads.el" "cider-find.elc" "cider-util.el" "cider-client.el" "cider-classpath.el" "cider-scratch.el" "cider-debug.el" "cider-classpath.elc" "cider-repl-history.el" "cider-debug.elc" "cider-macroexpansion.elc" "cider-connection.el" "cider-compat.el" "cider-tracing.el" "cider-repl-history.elc" "cider-apropos.elc" "cider-grimoire.el" "cider-util.elc" "cider-repl.elc" "cider-resolve.el" "cider-completion.elc" "nrepl-dict.elc" "cider-profile.elc" "cider-macroexpansion.el" "cider.el" "cider-tracing.elc" "cider-eldoc.elc" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/emacsconfig/" (23678 38834 293279 208000) ".emacs.el~" ".git/" ".emacs.d/" ".emacs.el" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/music/src/" (23674 24658 869864 923000) "music/" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/emacsconfig/.emacs.d/elpa/" (23678 8594 941516 815000) "company-flx-20180103.518/" "cider-20190302.114/" "autothemer-20180920.923/" "company-20190221.1427/" "highlight-defined-20181106.1718/" "avy-20190204.1201/" "spinner-1.7.3/" "multiple-cursors-20190224.1246/" "dash-20190221.1029/" "clj-refactor-20190117.1235/" "highlight-parentheses-20180704.1102/" "flycheck-20190213.1525/" "queue-0.2/" "flycheck-joker-20180913.504/" "popup-20160709.1429/" "highlight-symbol-20160102.2009/" "archives/" "sesman-20190208.1437/" "clojure-mode-20190302.1102/" "inflections-20170913.916/" "key-chord-20160227.1238/" "epl-20180205.2049/" "pkg-info-20150517.1143/" "expand-region-20180817.1134/" "yasnippet-20181015.1212/" "peg-20150708.641/" "hydra-20190213.1849/" "flx-20151030.1812/" "projectile-20190126.1117/" "paredit-20171127.205/" "edn-20160215.1219/" "gruvbox-theme-20190210.1403/" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/emacsconfig/.emacs.d/elpa/highlight-defined-20181106.1718/" (23678 17632 156057 410000) "highlight-defined.el" "highlight-defined-autoloads.el" "highlight-defined.elc" "highlight-defined-pkg.el" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/clojure-highlight-defined-mode/" (23678 14605 278813 631000) "clj/" "elisp/" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/" (23678 14056 859666 858000) "clj-tower-defense/" "emacsconfig/" "clojure-highlight-defined-mode/" "vimconfig/" "cooking-robo/" "music/" "../" "./")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

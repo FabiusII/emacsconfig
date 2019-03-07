@@ -1,1 +1,1 @@
-("~/repos/music/")
+("~/repos/emacsconfig/" "~/repos/music/")
