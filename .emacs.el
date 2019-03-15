@@ -28,7 +28,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region highlight-symbol highlight-parentheses company gruvbox-theme paredit cider clojure-mode))))
+    (org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region highlight-parentheses company gruvbox-theme paredit cider clojure-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -41,7 +41,6 @@ There are two things you can do about this warning:
 (require 'clojure-mode)
 (require 'company)
 (require 'eldoc)
-(require 'highlight-symbol)
 (require 'clj-refactor)
 (require 'flycheck-joker)
 (require 'ido)
@@ -49,13 +48,7 @@ There are two things you can do about this warning:
 (set-frame-font "Monaco 13")
 (load-theme 'gruvbox)
 (setq exec-path (append exec-path '("/usr/local/bin")))
-(ido-mode t)
-
-(global-set-key (kbd "M-n") 'forward-paragraph)
-(global-set-key (kbd "M-p") 'backward-paragraph)
-
-(add-hook 'after-init-hook #'global-flycheck-mode)
-(add-hook 'after-init-hook 'global-company-mode)
+(setq ido-enable-flex-matching t)
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "M-n") nil)
   (define-key company-active-map (kbd "M-p") nil)
@@ -66,6 +59,18 @@ There are two things you can do about this warning:
   (company-flx-mode +1)
   (setq company-idle-delay 0.5))
 
+(setq eldoc-idle-delay 0)
+(setq eldoc-echo-area-use-multiline-p t)
+
+
+;; GLOBAL MODES
+(ido-mode t)
+(ido-everywhere t)
+
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'after-init-hook 'display-line-numbers-mode)
+(add-hook 'after-init-hook 'global-company-mode)
+
 (add-hook 'after-init-hook 'projectile-global-mode)
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
@@ -75,24 +80,20 @@ There are two things you can do about this warning:
 (key-chord-define-global "jf" 'avy-goto-word-1)
 (key-chord-mode 1)
 
+;; ELISP and IELM MODES
 (add-hook 'emacs-lisp-mode-hook 'highlight-defined-mode)
-
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-(add-hook 'clojure-mode-hook 'paredit-mode)
-(add-hook 'cider-repl-mode-hook 'paredit-mode)
 (add-hook 'ielm-mode-hook 'paredit-mode)
-
 (add-hook 'emacs-lisp-mode-hook 'highlight-parentheses-mode)
-(add-hook 'clojure-mode-hook 'highlight-parentheses-mode)
-(add-hook 'cider-repl-mode-hook 'highlight-parentheses-mode)
 (add-hook 'ielm-mode-hook 'highlight-parentheses-mode)
-
-(add-hook 'clojure-mode-hook 'er/add-clojure-mode-expansions)
-
-(setq eldoc-idle-delay 0)
-(setq eldoc-echo-area-use-multiline-p t)
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+
+;; CLOJURE and CIDER MODES
+(add-hook 'clojure-mode-hook 'paredit-mode)
+(add-hook 'cider-repl-mode-hook 'paredit-mode)
+(add-hook 'clojure-mode-hook 'highlight-parentheses-mode)
+(add-hook 'cider-repl-mode-hook 'highlight-parentheses-mode)
 (add-hook 'cider-repl-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'clojure-mode-hook 'turn-on-eldoc-mode)
 
@@ -102,25 +103,6 @@ There are two things you can do about this warning:
   (cljr-add-keybindings-with-prefix "C-c C-m"))
 
 (add-hook 'clojure-mode-hook #'clj-refactor-hooks)
-
-(defvar highlighted-buffers (make-hash-table :test 'equal))
-
-(defun highlighted-buffer-p ()
-  (gethash (current-buffer) highlighted-buffers))
-
-(defun remember-highlighted-buffer ()
-  (puthash (current-buffer) t highlighted-buffers))
-
-(defun forget-highlighted-buffer ()
-  (remhash (current-buffer) highlighted-buffers))
-
-(defun toggle-highlighted-symbol (&optional symbol)
-  (interactive)
-  (if (highlighted-buffer-p)
-      (progn (highlight-symbol-remove-all)
-             (forget-highlighted-buffer))
-    (progn (highlight-symbol symbol)
-           (remember-highlighted-buffer))))
 
 (eval-after-load 'clojure-mode
   '(define-clojure-indent
@@ -149,12 +131,15 @@ There are two things you can do about this warning:
      (ANY 2)
      (context 2)))
 
-(global-set-key (kbd "M-h") 'toggle-highlighted-symbol)
-(global-set-key (kbd "M-H") 'highlight-symbol-query-replace)
-
+;; CUSTOM KEY BINDINGS
 (global-set-key (kbd "S-SPC") 'company-complete)
 (global-set-key (kbd "C-;") 'er/expand-region)
+
+(global-set-key (kbd "M-n") 'forward-paragraph)
+(global-set-key (kbd "M-p") 'backward-paragraph)
+
 (global-hl-line-mode +1)
+(setq mac-command-modifier 'meta)
 
 (provide '.emacs)
 ;;; .emacs.el ends here

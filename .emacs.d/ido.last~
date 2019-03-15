@@ -2,54 +2,126 @@
 
 ;; ----- ido-last-directory-list -----
 (
+ ("/Users/fabianhanselmann/repos/functional-programming-katas/simple-dependency-injection/src/main/scala/" . "reader/")
+ ("/Users/fabianhanselmann/repos/functional-programming-katas/simple-dependency-injection/src/main/" . "scala/")
+ ("/Users/fabianhanselmann/repos/functional-programming-katas/simple-dependency-injection/src/" . "main/")
+ ("/Users/fabianhanselmann/repos/functional-programming-katas/simple-dependency-injection/" . "src/")
+ ("/Users/fabianhanselmann/repos/functional-programming-katas/" . "simple-dependency-injection/")
+ ("/Users/fabianhanselmann/repos/cookingrobo/app/" . "controllers/")
+ ("/Users/fabianhanselmann/repos/cookingrobo/" . "app/")
+ ("/Users/fabianhanselmann/repos/rewe-order-service/test/" . "oms/")
+ ("/Users/fabianhanselmann/repos/rewe-order-service/test-int/oms/" . "it/")
+ ("/Users/fabianhanselmann/repos/rewe-order-service/test-int/" . "oms/")
+ ("/Users/fabianhanselmann/repos/rewe-order-service/src/oms/" . "business/")
+ ("/Users/fabianhanselmann/repos/rewe-order-service/src/" . "oms/")
+ ("/Users/fabianhanselmann/repos/rewe-order-service/" . "test/")
  ("/Users/fabianhanselmann/repos/music/src/" . "music/")
  ("/Users/fabianhanselmann/repos/music/" . "src/")
  ("/Users/fabianhanselmann/" . "repos/")
  ("/Users/fabianhanselmann/repos/clojure-highlight-defined-mode/" . "clj/")
- ("/Users/fabianhanselmann/repos/" . "clojure-highlight-defined-mode/")
+ ("/Users/fabianhanselmann/repos/" . "rewe-order-service/")
 )
 
 ;; ----- ido-work-directory-list -----
 (
- "/Users/fabianhanselmann/repos/music/src/music/"
+ "/Users/fabianhanselmann/repos/functional-programming-katas/simple-dependency-injection/src/main/scala/reader/"
  "/Users/fabianhanselmann/"
+ "/Users/fabianhanselmann/repos/cookingrobo/app/controllers/"
+ "/Users/fabianhanselmann/repos/rewe-order-service/test/oms/"
+ "/Users/fabianhanselmann/repos/emacsconfig/"
+ "/Users/fabianhanselmann/repos/rewe-order-service/src/oms/business/"
  "/Users/fabianhanselmann/repos/clojure-highlight-defined-mode/clj/"
  "/Users/fabianhanselmann/repos/clojure-highlight-defined-mode/elisp/"
+ "/Users/fabianhanselmann/repos/music/src/music/"
  "~/repos/clojure-highlight-defined-mode/elisp/"
- "/Users/fabianhanselmann/repos/emacsconfig/"
  "/Users/fabianhanselmann/repos/clojure-highlight-defined-mode/"
 )
 
 ;; ----- ido-work-file-list -----
 (
- "midi.clj"
+ "Reader.scala"
  ".emacs.el"
+ "dish_controller.rb"
+ "test_util.clj"
+ "order.clj"
  "highlight_defined.clj"
  "highlight-defined.el"
  "core.clj"
+ "midi.clj"
  "highlight-defined.clj"
- "clojure"
 )
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/Users/fabianhanselmann/repos/music/src/music/" (23679 54591 536118 667000) "#core.clj#" "midi.clj" ".#core.clj" "core.clj" "core.clj~" "midi.clj~" "melody.clj" "../" "./")
+ ("/Users/fabianhanselmann/repos/emacsconfig/" (23689 11031 73524 802000) ".emacs.el~" ".git/" ".emacs.d/" ".emacs.el" "../" "./")
 
- ("/Users/fabianhanselmann/repos/clojure-highlight-defined-mode/clj/" (23679 44307 896720 350000) "highlight_defined.clj" "highlight_defined.clj~" "../" "./")
+ ("/Users/fabianhanselmann/" (23689 13269 367444 621000) ".zlogin" ".viminfo" ".bash_history" ".erc/" ".gitconfig" ".cache/" ".python_history" "Downloads/" ".oh-my-zsh/" ".gem/" ".bash_profile" ".m2/" ".mysql_history" ".pgpass" "Documents/" "mysql-connector-java-8.0.15.jar" ".npm/" ".nrepl-history" ".Trash/" ".gonvim/" ".live-packs/" ".profile" "Applications/" ".vimrc" "Movies/" ".ssh/" ".kafkatool2/" "symlink.sh" "Kafka/" "package-lock.json" ".gitignore" ".ideavimrc" "Public/" ".lein/" ".sbt/" ".bash_sessions/" ".cups/" ".kdiff3rc" ".pgadmin/" ".pgAdmin4.startup.log" ".android/" ".emacs.d/" ".oracle_jre_usage/" ".emacs.el" ".lesshst" ".mkshrc" "Library/" "Desktop/" ".solargraph/" ".rvm/" ".p2/" ".zsh_history" "kafkatool/" ".clojure_history" ".bundle/" "node_modules/" "Pictures/" ".zcompdump-digital0889-5.3" ".psql_history" ".local/" ".sqlworkbench/" ".boot/" ".zshrc" "VimR.app/" ".bashrc" ".subversion/" ".tooling/" ".CFUserTextEncoding" "VirtualBox VMs/" ".tmux.conf" ".DS_Store" ".vim/" "pgdata/" ".ivy2/" ".docker/" ".clojure/" "repos/" "postgresql/" ".idea-build/" "Music/" ".config/" ".joker" "lieferflat-customers" "../" "./")
 
- ("/Users/fabianhanselmann/repos/clojure-highlight-defined-mode/elisp/" (23679 43774 20952 602000) "highlight-defined.el" "highlight-defined.el~" "../" "./")
+ ("/Users/fabianhanselmann/repos/functional-programming-katas/simple-dependency-injection/src/main/scala/reader/" (23630 46762 443192 792000) "Reader.scala" "../" "./")
 
- ("/Users/fabianhanselmann/repos/music/" (23679 51141 827813 319000) "src/" "doc/" ".gitignore" "README.md" ".nrepl-port" "resources/" ".hgignore" "target/" "CHANGELOG.md" "test/" "LICENSE" "project.clj" "../" "./")
+ ("/Users/fabianhanselmann/repos/functional-programming-katas/simple-dependency-injection/src/main/scala/" (23567 43053 538773 646000) "reader/" "../" "./")
 
- ("/Users/fabianhanselmann/" (23679 50385 531321 863000) ".zlogin" ".viminfo" ".bash_history" ".emacs.el~" ".cache/" "Downloads/" ".gem/" ".bash_profile" ".m2/" "Documents/" ".gervill/" ".Trash/" ".profile" ".vimrc" "Movies/" ".ssh/" "Public/" ".lein/" ".bash_sessions/" ".emacs.d/" ".emacs.el" ".lesshst" ".mkshrc" "Library/" "Desktop/" ".rvm/" ".bundle/" "Pictures/" ".NERDTreeBookmarks" ".zshrc" ".bashrc" ".subversion/" ".CFUserTextEncoding" ".DS_Store" ".vim/" "repos/" "Music/" ".config/" "../" "./")
+ ("/Users/fabianhanselmann/repos/functional-programming-katas/simple-dependency-injection/src/main/" (23567 43053 538741 233000) "scala/" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/functional-programming-katas/simple-dependency-injection/src/" (23567 43053 539025 976000) "main/" "test/" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/functional-programming-katas/simple-dependency-injection/" (23567 43066 831805 430000) "src/" "target/" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/functional-programming-katas/" (23632 17476 560490 676000) ".idea/" "build.sbt" "simple-streams/" "simple-lists/" "reactive-streams-with-akka/" ".git/" ".gitignore" "simple-state/" "simple-dependency-injection/" "functional-type-classes/" "project/" "README.md" "simple-errors/" "simple-logging/" "target/" "simple-generators/" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/rewe-order-service/src/oms/" (23687 42779 123593 966000) "reports/" "configuration.clj" "presentation/" "monitoring/" "communication/" "cache.clj" "queue/" "crypto.clj" "context_gen.clj" "logging.clj" "business/" "util.clj" "metrics.clj" "data.clj" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/rewe-order-service/src/oms/business/" (23689 3692 550084 87000) "fake_bbo.clj" "db_to_dsgvo_datenauskunft.clj" "listing.clj" "line_item_sync.clj" "email/" "billable_order.clj" "line_item_types.clj" "bbo_validation.clj" "order.clj" "vat_correction.clj" "picked_order.clj" "vat_calculation.clj" "cs_status_sync.clj" "ctp_return_info.clj" "sap.clj" "ctp_delivery_object.clj" "order_preparation.clj" "schema/" "toggles.clj" "status/" "bon.clj" "apidoc/" "lineitem_mappings.clj" "health/" "leader_election.clj" "oms_event_types.clj" "order_history.clj" "cs_messages.clj" "email_template.clj" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/rewe-order-service/" (23689 9118 629165 244000) "sql/" "src/" ".idea/" "src-scripts/" "lein" "test-resources/" "open-log" "apidoc.json" "mqjms.log.0" "test-results/" ".git/" "jenkins/" "src-java/" "gulpfile.js" "Vagrantfile" "install-vagrant-box.sh" "scripts/" "package.json" ".gitignore" "test-int/" "build.sh" ".lein-repl-history" "ansible/" "README.md" "build_docker.sh" "docker-logging/" "src-dev/" "resources/" "src-int/" ".credentials.edn" "target/" "Dockerfile" "build.xml" "bin/" "src-scripts src-dev/" "test/" "LICENSE" "rewe-order-service.iml" "install/" ".lein-env" "psqlvagrant.sh" "project.clj" ".lein-failures" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/cookingrobo/app/controllers/" (23666 48939 956258 27000) "concerns/" "auth_controller.rb" "dish_controller.rb" "admin_controller.rb" "user_controller.rb" "home_controller.rb" "search_controller.rb" "random_dish_controller.rb" "shopping_list_controller.rb" "application_controller.rb" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/cookingrobo/app/channels/" (23598 12245 382237 501000) "application_cable/" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/cookingrobo/app/" (23648 34999 132259 69000) "channels/" "helpers/" "domain/" "assets/" "views/" "controllers/" "jobs/" "models/" "auth/" "mailers/" ".DS_Store" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/rewe-order-service/test/oms/" (23688 53520 560613 148000) "order_details_object.clj" "test_util.clj" "test_request_utils.clj" "acceptance/" "unit/" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/cookingrobo/" (23666 48900 758743 800000) ".idea/" "vendor/" "coverage/" "tmp/" ".git/" "Gemfile.lock" "log/" "Gemfile" "db/" "lib/" "package.json" ".gitignore" "public/" "yarn.lock" "Rakefile" "README.md" "tags" ".ackrc" ".byebug_history" "cookingrobo.iml" "config.ru" "cooking-robo.iml" "Dockerfile" "config/" "proc_num0.pid" "bootstrapping/" "bin/" "proc_num1.pid" "test/" "app/" "proc_num3.pid" ".DS_Store" "proc_num2.pid" "proc_num5.pid" "proc_num4.pid" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/rewe-order-service/test-int/oms/" (23689 1 529462 346000) "e2e/" "smtp_test_utils.clj" "repl/" "it/" "test_int_util.clj" "kafka_test_utils.clj" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/rewe-order-service/test-int/oms/e2e/" (23689 7173 67297 977000) "oms_health_e2e.clj" "payment_preparation_e2e.clj" "order_details_e2e.clj" "order_test_e2e.clj" "order_cancel_e2e.clj" "mixed_order_modification_prs_test.clj" "order_modify_e2e.clj" "order_history_e2e.clj" "delete_customer_e2e.clj" "order_test_complete_ctp_e2e.clj" "order_create_e2e.clj" "customer_null_payload_e2e.clj" "order_test_complete_ls_e2e.clj" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/rewe-order-service/test/oms/acceptance/" (23688 54331 817033 885000) "deliveries/" "create_order_test.clj" "failure_smtp_email_to_cs.clj" "toggles_test.clj" "health_check_test.clj" "cancel_order_test.clj" "ctp/" "merchants_sync_test.clj" "billable_order/" "oauth_test.clj" "queue/" "picked_order/" "metrics_check_test.clj" "line_item_synchronization_failure_test.clj" "process_cs_messages_test.clj" "sql_test_it.clj" "email_test_utils.clj" "lineitem_promotion_test.clj" "public_endpoint_test.clj" "line_item_synchronization_test.clj" "dsgvo/" "cs_order_id_by_oms_id.clj" "order_test_utils.clj" "order_details_bright_tag_test.clj" "order_details_test.clj" "payment_auth_test.clj" "kafka_event_queue_test.clj" "riemann_send_event_test.clj" "order_history_test.clj" "failure_email_service_test.clj" "sap/" "modify_order_test.clj" "check_migration_consistency.clj" "delete_customer_test.clj" "block_deleted_users_api_test.clj" "basket_delete_test.clj" "bon_topic_consumption.clj" "index_res_test.clj" "rewe_merchant_topic.clj" "queue_utils.clj" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/rewe-order-service/test-int/oms/it/" (23686 25926 506132 144000) "order_queue.clj" "kafka_event_queue_it_test.clj" "order_history_test_it.clj" "email_service_test.clj" "oauth_test.clj" "db/" "market_service_it.clj" "cs_test_it.clj" "email.clj" "context_it.clj" "test_sequentional_execution.clj" "sap_test_it.clj" "cs_metrics_test.clj" "leader_election.clj" "kafka.clj" "basket_service_test_it.clj" "heartbeat.clj" "ctp.clj" "manager_context_test.clj" "order_id_it.clj" "logback_json_log_test_it.clj" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/rewe-order-service/test-int/oms/it/db/" (23687 49790 62213 115000) "deleted_customer.clj" "dsgvo_cache_test_it.clj" "merchants.clj" "lineitem_history_test.clj" "return_info.clj" "update_merchant_info_test.clj" "ctp_lineitem_state_update_test.clj" "return_info_report.clj" "toggles_it_test.clj" "bon_event.clj" "sap.clj" "ffo_validation.clj" "order_test_it.clj" "coupon.clj" "order_details_it.clj" "rewe_merchant.clj" "cs_correlation_id.clj" "delivery_objects_test.clj" "sap_invoice_number.clj" "ctp_suborder_queue_test.clj" "customer.clj" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/rewe-order-service/src/oms/business/email/" (23687 31651 940260 667000) "failure_email.clj" "cancellation_email.clj" "confirmation_email.clj" "ctp_delivery_email.clj" "common.clj" "#confirmation_email.clj#" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/rewe-order-service/test/" (23474 2036 655839 166000) "oms/" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/rewe-order-service/src/oms/business/schema/" (23686 12978 766848 588000) "cs_order.clj" "dsgvo_customer_data_transfer.clj" "billable_order.clj" "event_order_details.clj" ".#db_order.clj" "order_details.clj" "ctp_request.clj" "order.clj" "billable_lineitem.clj" "payment_method.clj" "ctp_return_info.clj" "sap.clj" "ctp_delivery_object.clj" "event.clj" "order_test.clj" "riemann_event.clj" "checkout_order.clj" "logging.clj" "bon.clj" "rewe_merchant.clj" "common.clj" "db_order.clj" "order_history.clj" "ctp_event.clj" "customer.clj" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/rewe-order-service/test-int/" (23474 2036 620106 530000) "oms/" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/rewe-order-service/src/oms/communication/" (23670 47869 261936 683000) "markets.clj" "details_to_dsgvo_customer_data_transfer.clj" "return_info_process.clj" "ctp/" "map_to_ctp.clj" "market_schema.clj" "cs_to_order.clj" "resend_events.clj" "sap.clj" "db_to_order_details.clj" "payment_reservation_service.clj" "db_to_event_order_details.clj" "bon_to_fulfilled_order.clj" "cs.clj" "kafka.clj" "basket_service.clj" "kafka_event_queue.clj" "payment_reservation_service_schema.clj" "db_to_order.clj" "map_to_cs.clj" "riemann_send_event.clj" "order_details_util.clj" "oauth_schema.clj" "riemann.clj" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/rewe-order-service/src/" (23641 42528 710855 292000) "deb/" "oms/" "logback.xml" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/" (23680 54763 997034 171000) "cookingrobo/" "functional-programming-katas/" "lieferflat-issue/" "emacsconfig/" "nvim-psql/" "rewe-order-service/" "vimconfig/" "jenkins_packer_baseimage/" "Racket/" ".DS_Store" "customer-account-service/" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/clojure-highlight-defined-mode/clj/" (23679 53470 320771 92000) "highlight_defined.clj" "highlight_defined.clj~" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/clojure-highlight-defined-mode/elisp/" (23679 57308 327990 283000) "highlight-defined.el" "highlight-defined.el~" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/music/" (23679 56316 678554 856000) "src/" "doc/" ".gitignore" ".lein-repl-history" "README.md" ".nrepl-port" "resources/" ".hgignore" "target/" "CHANGELOG.md" "test/" "LICENSE" "project.clj" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/music/src/music/" (23679 56289 342358 373000) "midi.clj" "core.clj" "core.clj~" "midi.clj~" "melody.clj" "../" "./")
 
  ("~/repos/clojure-highlight-defined-mode/elisp/" (23679 39158 857730 851000) "highlight-defined.el" "highlight-defined.el~" "../" "./")
 
  ("/Users/fabianhanselmann/repos/emacsconfig/.emacs.d/" (23678 41788 911470 470000) "elpa/" "url/" "auto-save-list/" "projectile-bookmarks.eld" "ido.last~" "ido.last" "../" "./")
 
  ("/Users/fabianhanselmann/repos/emacsconfig/.emacs.d/elpa/cider-20190302.114/" (23678 45054 500992 92000) "cider-mode.elc" "cider-eval.elc" "cider-popup.el" "cider-browse-ns.el" "cider-scratch.elc" "cider-eval.el" "cider-connection.elc" "cider-doc.el" "cider-ns.elc" "cider-apropos.el" "cider-grimoire.elc" "nrepl-client.elc" "cider-popup.elc" "cider-pkg.el" "cider-browse-ns.elc" "cider-browse-spec.elc" "cider-common.elc" "cider-compat.elc" "cider-find.el" "cider-stacktrace.el" "cider-selector.el" "cider-ns.el" "cider-common.el" "cider-inspector.elc" "cider-mode.el" "cider-completion.el" "cider-format.elc" "cider-eldoc.el" "cider-client.elc" "nrepl-client.el" "cider-resolve.elc" "cider-selector.elc" "nrepl-dict.el" "cider-stacktrace.elc" "cider-cheatsheet.el" "cider-inspector.el" "cider.elc" "cider-browse-spec.el" "cider-format.el" "cider-doc.elc" "cider-profile.el" "cider-test.el" "cider-overlays.elc" "cider-overlays.el" "cider-cheatsheet.elc" "cider-repl.el" "cider-test.elc" "cider-autoloads.el" "cider-find.elc" "cider-util.el" "cider-client.el" "cider-classpath.el" "cider-scratch.el" "cider-debug.el" "cider-classpath.elc" "cider-repl-history.el" "cider-debug.elc" "cider-macroexpansion.elc" "cider-connection.el" "cider-compat.el" "cider-tracing.el" "cider-repl-history.elc" "cider-apropos.elc" "cider-grimoire.el" "cider-util.elc" "cider-repl.elc" "cider-resolve.el" "cider-completion.elc" "nrepl-dict.elc" "cider-profile.elc" "cider-macroexpansion.el" "cider.el" "cider-tracing.elc" "cider-eldoc.elc" "../" "./")
-
- ("/Users/fabianhanselmann/repos/emacsconfig/" (23678 38834 293279 208000) ".emacs.el~" ".git/" ".emacs.d/" ".emacs.el" "../" "./")
 
  ("/Users/fabianhanselmann/repos/music/src/" (23674 24658 869864 923000) "music/" "../" "./")
 
@@ -58,8 +130,6 @@
  ("/Users/fabianhanselmann/repos/emacsconfig/.emacs.d/elpa/highlight-defined-20181106.1718/" (23678 17632 156057 410000) "highlight-defined.el" "highlight-defined-autoloads.el" "highlight-defined.elc" "highlight-defined-pkg.el" "../" "./")
 
  ("/Users/fabianhanselmann/repos/clojure-highlight-defined-mode/" (23678 14605 278813 631000) "clj/" "elisp/" "../" "./")
-
- ("/Users/fabianhanselmann/repos/" (23678 14056 859666 858000) "clj-tower-defense/" "emacsconfig/" "clojure-highlight-defined-mode/" "vimconfig/" "cooking-robo/" "music/" "../" "./")
 )
 
 ;; ----- ido-unc-hosts-cache -----
