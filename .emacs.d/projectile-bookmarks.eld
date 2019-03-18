@@ -1,1 +1,1 @@
-("~/repos/emacsconfig/" "~/repos/rewe-order-service/" "~/repos/functional-programming-katas/" "~/repos/cookingrobo/")
+("~/repos/customer-account-service/" "~/repos/emacsconfig/" "~/repos/rewe-order-service/" "~/repos/cookingrobo/" "~/repos/functional-programming-katas/")

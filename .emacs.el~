@@ -28,7 +28,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (ensime org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region highlight-parentheses company gruvbox-theme paredit cider clojure-mode))))
+    (xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region highlight-parentheses company gruvbox-theme paredit cider clojure-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -44,6 +44,9 @@ There are two things you can do about this warning:
 (require 'clj-refactor)
 (require 'flycheck-joker)
 (require 'ido)
+(require 'js2-mode)
+
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 (set-frame-font "Monaco 13")
 (load-theme 'gruvbox)
@@ -62,6 +65,11 @@ There are two things you can do about this warning:
 (setq eldoc-idle-delay 0)
 (setq eldoc-echo-area-use-multiline-p t)
 
+(defun align-whitespace (start end)
+  (interactive "r")
+  (align-regexp start end "\\(\\s-*\\)\\s-" 1 0 t)
+  ;;(indent-region start end)
+)
 
 ;; GLOBAL MODES
 (ido-mode t)
@@ -131,6 +139,9 @@ There are two things you can do about this warning:
      (ANY 2)
      (context 2)))
 
+
+;; JS Modes
+(add-hook 'js2-mode #'js2-imenu-extras-mode)
 ;; CUSTOM KEY BINDINGS
 (global-set-key (kbd "S-SPC") 'company-complete)
 (global-set-key (kbd "C-;") 'er/expand-region)

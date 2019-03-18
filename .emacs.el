@@ -28,7 +28,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region highlight-parentheses company gruvbox-theme paredit cider clojure-mode))))
+    (xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region highlight-parentheses company gruvbox-theme paredit cider clojure-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -44,10 +44,17 @@ There are two things you can do about this warning:
 (require 'clj-refactor)
 (require 'flycheck-joker)
 (require 'ido)
+(require 'js2-mode)
+(require 'js2-refactor)
+(require 'xref-js2)
+(require 'ag)
+
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 (set-frame-font "Monaco 13")
 (load-theme 'gruvbox)
 (setq exec-path (append exec-path '("/usr/local/bin")))
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 (setq ido-enable-flex-matching t)
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "M-n") nil)
@@ -62,6 +69,11 @@ There are two things you can do about this warning:
 (setq eldoc-idle-delay 0)
 (setq eldoc-echo-area-use-multiline-p t)
 
+(defun align-whitespace (start end)
+  (interactive "r")
+  (align-regexp start end "\\(\\s-*\\)\\s-" 1 0 t)
+  ;;(indent-region start end)
+)
 
 ;; GLOBAL MODES
 (ido-mode t)
@@ -130,6 +142,16 @@ There are two things you can do about this warning:
      (HEAD 2)
      (ANY 2)
      (context 2)))
+
+
+;; JS Modes
+(add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
+(add-hook 'js2-mode-hook #'js2-refactor-mode)
+(js2r-add-keybindings-with-prefix "C-c C-r")
+(define-key js2-mode-map (kbd "C-k") #'js2r-kill)
+(define-key js-mode-map (kbd "M-.") nil)
+(add-hook 'js2-mode-hook (lambda ()
+			  (add-hook 'xref-backend-functions #'xref-js2-xref-backend)))
 
 ;; CUSTOM KEY BINDINGS
 (global-set-key (kbd "S-SPC") 'company-complete)
