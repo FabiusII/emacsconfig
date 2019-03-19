@@ -28,7 +28,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region highlight-parentheses company gruvbox-theme paredit cider clojure-mode))))
+    (groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region highlight-parentheses company gruvbox-theme paredit cider clojure-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -45,12 +45,17 @@ There are two things you can do about this warning:
 (require 'flycheck-joker)
 (require 'ido)
 (require 'js2-mode)
+(require 'js2-refactor)
+(require 'xref-js2)
+(require 'ag)
+(require 'company-tern)
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 (set-frame-font "Monaco 13")
 (load-theme 'gruvbox)
 (setq exec-path (append exec-path '("/usr/local/bin")))
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 (setq ido-enable-flex-matching t)
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "M-n") nil)
@@ -141,7 +146,18 @@ There are two things you can do about this warning:
 
 
 ;; JS Modes
-(add-hook 'js2-mode #'js2-imenu-extras-mode)
+(add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
+(add-hook 'js2-mode-hook #'js2-refactor-mode)
+(js2r-add-keybindings-with-prefix "C-c C-r")
+(define-key js2-mode-map (kbd "C-k") #'js2r-kill)
+(define-key js-mode-map (kbd "M-.") nil)
+(add-hook 'js2-mode-hook (lambda ()
+			  (add-hook 'xref-backend-functions #'xref-js2-xref-backend)))
+(add-hook 'js2-mode-hook (add-to-list 'company-backends 'company-tern))
+(add-hook 'js2-mode-hook 'tern-mode)
+(define-key tern-mode-keymap (kbd "M-.") nil)
+(define-key tern-mode-keymap (kbd "M-,") nil)
+
 ;; CUSTOM KEY BINDINGS
 (global-set-key (kbd "S-SPC") 'company-complete)
 (global-set-key (kbd "C-;") 'er/expand-region)

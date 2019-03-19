@@ -28,7 +28,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region highlight-parentheses company gruvbox-theme paredit cider clojure-mode))))
+    (web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region highlight-parentheses company gruvbox-theme paredit cider clojure-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -48,13 +48,18 @@ There are two things you can do about this warning:
 (require 'js2-refactor)
 (require 'xref-js2)
 (require 'ag)
+(require 'company-tern)
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
+(add-to-list 'auto-mode-alist '("\\.spec\\'" . groovy-mode))
+(add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
 
 (set-frame-font "Monaco 13")
 (load-theme 'gruvbox)
-(setq exec-path (append exec-path '("/usr/local/bin")))
+(setq exec-path (append exec-path '("/usr/local/bin" "/usr/local/Cellar/node/11.3.0_1/bin")))
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/Cellar/node/11.3.0_1/bin"))
 (setq ido-enable-flex-matching t)
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "M-n") nil)
@@ -151,7 +156,11 @@ There are two things you can do about this warning:
 (define-key js2-mode-map (kbd "C-k") #'js2r-kill)
 (define-key js-mode-map (kbd "M-.") nil)
 (add-hook 'js2-mode-hook (lambda ()
-			  (add-hook 'xref-backend-functions #'xref-js2-xref-backend)))
+			   (tern-mode)
+			   (add-to-list 'company-backends 'company-tern)
+			   (add-hook 'xref-backend-functions #'xref-js2-xref-backend)))
+(define-key tern-mode-keymap (kbd "M-.") nil)
+(define-key tern-mode-keymap (kbd "M-,") nil)
 
 ;; CUSTOM KEY BINDINGS
 (global-set-key (kbd "S-SPC") 'company-complete)
