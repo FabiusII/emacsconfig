@@ -7,6 +7,9 @@
  (magit-fetch
   ("--prune"))
  (magit-log
+  ("-n256"
+   ("--" "src/main/resources/static/js/test/unit/OrderDetailReweModelSpec.js")
+   "--graph" "--decorate")
   ("-n256" "--graph" "--decorate"))
  (magit-merge nil)
  (magit-pull nil)
