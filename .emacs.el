@@ -28,7 +28,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region highlight-parentheses company gruvbox-theme paredit cider clojure-mode))))
+    (aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region highlight-parentheses company gruvbox-theme paredit cider clojure-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -56,6 +56,10 @@ There are two things you can do about this warning:
 (add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
 (add-to-list 'auto-mode-alist '("\\.spec\\'" . groovy-mode))
 (add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 
 (set-frame-font "Monaco 13")
 (load-theme 'gruvbox)
@@ -156,22 +160,30 @@ There are two things you can do about this warning:
 (add-hook 'js2-mode-hook #'js2-refactor-mode)
 (js2r-add-keybindings-with-prefix "C-c C-r")
 (define-key js2-mode-map (kbd "C-k") #'js2r-kill)
-(define-key js-mode-map (kbd "M-.") nil)
+(define-key js2-mode-map (kbd "M-.") nil)
 (add-hook 'js2-mode-hook (lambda ()
 			   (tern-mode)
 			   (add-to-list 'company-backends 'company-tern)
 			   (add-hook 'xref-backend-functions #'xref-js2-xref-backend)))
 (define-key tern-mode-keymap (kbd "M-.") nil)
 (define-key tern-mode-keymap (kbd "M-,") nil)
-
+(add-hook 'js2-mode-hook 'electric-pair-mode)
+(add-hook 'js2-mode-hook 'aggressive-indent-mode)
 
 ;; Ruby modes
 (add-hook 'ruby-mode-hook (lambda ()
 			    (robe-mode)
-			    (add-to-list 'company-backends 'company-robe)))
+			    (add-to-list 'company-backends 'company-robe)
+			    (electric-pair-mode)
+			    (aggressive-indent-mode)))
 
 (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
   (rvm-activate-corresponding-ruby))
+
+;; Webmodes
+(add-hook 'web-mode-hook (lambda ()
+			   (electric-pair-mode)
+			   (aggressive-indent-mode)))
 
 ;; CUSTOM KEY BINDINGS
 (global-set-key (kbd "S-SPC") 'company-complete)
@@ -185,3 +197,4 @@ There are two things you can do about this warning:
 
 (provide '.emacs)
 ;;; .emacs.el ends here
+(put 'upcase-region 'disabled nil)

@@ -28,7 +28,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region highlight-parentheses company gruvbox-theme paredit cider clojure-mode))))
+    (aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region highlight-parentheses company gruvbox-theme paredit cider clojure-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -49,11 +49,19 @@ There are two things you can do about this warning:
 (require 'xref-js2)
 (require 'ag)
 (require 'company-tern)
+(require 'rvm)
 
+(rvm-use-default)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
 (add-to-list 'auto-mode-alist '("\\.spec\\'" . groovy-mode))
 (add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+
+(setq web-mode-markup-indent-offset 2)
 
 (set-frame-font "Monaco 13")
 (load-theme 'gruvbox)
@@ -162,6 +170,15 @@ There are two things you can do about this warning:
 (define-key tern-mode-keymap (kbd "M-.") nil)
 (define-key tern-mode-keymap (kbd "M-,") nil)
 
+
+;; Ruby modes
+(add-hook 'ruby-mode-hook (lambda ()
+			    (robe-mode)
+			    (add-to-list 'company-backends 'company-robe)))
+
+(defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+  (rvm-activate-corresponding-ruby))
+
 ;; CUSTOM KEY BINDINGS
 (global-set-key (kbd "S-SPC") 'company-complete)
 (global-set-key (kbd "C-;") 'er/expand-region)
@@ -174,3 +191,4 @@ There are two things you can do about this warning:
 
 (provide '.emacs)
 ;;; .emacs.el ends here
+(put 'upcase-region 'disabled nil)
