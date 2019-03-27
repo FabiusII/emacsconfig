@@ -3,7 +3,7 @@
 ;; ----- ido-last-directory-list -----
 (
  ("/Users/fabianhanselmann/repos/cooking-robo/public/" . "assets/")
- ("/Users/fabianhanselmann/repos/cooking-robo/app/assets/" . "javascripts/")
+ ("/Users/fabianhanselmann/repos/cooking-robo/app/assets/" . "stylesheets/")
  ("/Users/fabianhanselmann/repos/cooking-robo/app/" . "assets/")
  ("/Users/fabianhanselmann/repos/cooking-robo/" . "app/")
  ("/Users/fabianhanselmann/.sbt/1.0/" . "plugins/")
@@ -66,13 +66,13 @@
 
 ;; ----- ido-dir-file-cache -----
 (
+ ("/Users/fabianhanselmann/repos/cooking-robo/app/assets/stylesheets/" (23706 34623 118558 903000) "fonts.css" "dish.sass" "topbar.sass" "find.sass" "home.scss" "player.sass" "application.scss" "../" "./")
+
+ ("/Users/fabianhanselmann/repos/cooking-robo/app/views/home/" (23706 35277 921967 968000) "impressum.html.erb" "index.html.erb" "../" "./")
+
+ ("/Users/fabianhanselmann/" (23706 31919 76928 938000) ".zlogin" ".viminfo" ".bash_history" ".emacs.el~" ".cache/" "Downloads/" ".oh-my-zsh/" ".gem/" ".bash_profile" ".m2/" ".mysql_history" "Documents/" ".npm/" ".gervill/" ".Trash/" ".profile" ".vimrc" "Movies/" ".ssh/" "Public/" ".lein/" ".bash_sessions/" ".cups/" ".emacs.d/" ".emacs.el" ".lesshst" ".mkshrc" "Library/" "Desktop/" ".solargraph/" ".rvm/" ".zsh_history" ".bundle/" ".zcompdump-Fabian’s MacBook Air-5.3" "Pictures/" ".NERDTreeBookmarks" ".local/" ".zshrc" ".zshrc.pre-oh-my-zsh" ".bashrc" ".subversion/" ".CFUserTextEncoding" ".zshrc~" ".DS_Store" ".vim/" "repos/" "Music/" ".config/" "../" "./")
+
  ("/Users/fabianhanselmann/repos/cooking-robo/app/assets/javascripts/" (23703 51205 788855 993000) "channels/" ".tern-port" "application.js" "admin.js" "dishDetails.js" "home.js" "userPage.js" "shoppingList.js" "cable.js" "../" "./")
-
- ("/Users/fabianhanselmann/" (23703 50724 66908 793000) ".zlogin" ".viminfo" ".bash_history" ".emacs.el~" ".cache/" "Downloads/" ".oh-my-zsh/" ".gem/" ".bash_profile" ".m2/" ".mysql_history" "Documents/" ".npm/" ".gervill/" ".Trash/" ".profile" ".vimrc" "Movies/" ".ssh/" "Public/" ".lein/" ".bash_sessions/" ".cups/" ".emacs.d/" ".emacs.el" ".lesshst" ".mkshrc" "Library/" "Desktop/" ".solargraph/" ".rvm/" ".zsh_history" ".bundle/" ".zcompdump-Fabian’s MacBook Air-5.3" "Pictures/" ".NERDTreeBookmarks" ".local/" ".zshrc" ".zshrc.pre-oh-my-zsh" ".bashrc" ".subversion/" ".CFUserTextEncoding" ".zshrc~" ".DS_Store" ".vim/" "repos/" "Music/" ".config/" "../" "./")
-
- ("/Users/fabianhanselmann/repos/cooking-robo/app/views/home/" (23701 63369 153389 108000) "impressum.html.erb" "index.html.erb" "../" "./")
-
- ("/Users/fabianhanselmann/repos/cooking-robo/app/assets/stylesheets/" (23701 62991 251140 317000) "fonts.css" "home.scss~" "dish.sass" "topbar.sass" "find.sass" "home.scss" "player.sass" "application.scss" "../" "./")
 
  ("/Users/fabianhanselmann/repos/emacsconfig/" (23700 49872 797312 818000) ".emacs.el~" ".git/" ".emacs.d/" ".emacs.el" "../" "./")
 
