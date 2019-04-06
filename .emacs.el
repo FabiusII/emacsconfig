@@ -28,7 +28,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region highlight-parentheses company gruvbox-theme paredit cider clojure-mode))))
+    (which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -52,6 +52,8 @@ There are two things you can do about this warning:
 (require 'rvm)
 
 (rvm-use-default)
+(show-paren-mode)
+
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
 (add-to-list 'auto-mode-alist '("\\.spec\\'" . groovy-mode))
@@ -107,16 +109,12 @@ There are two things you can do about this warning:
 (add-hook 'emacs-lisp-mode-hook 'highlight-defined-mode)
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
 (add-hook 'ielm-mode-hook 'paredit-mode)
-(add-hook 'emacs-lisp-mode-hook 'highlight-parentheses-mode)
-(add-hook 'ielm-mode-hook 'highlight-parentheses-mode)
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 
 ;; CLOJURE and CIDER MODES
 (add-hook 'clojure-mode-hook 'paredit-mode)
 (add-hook 'cider-repl-mode-hook 'paredit-mode)
-(add-hook 'clojure-mode-hook 'highlight-parentheses-mode)
-(add-hook 'cider-repl-mode-hook 'highlight-parentheses-mode)
 (add-hook 'cider-repl-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'clojure-mode-hook 'turn-on-eldoc-mode)
 
@@ -164,8 +162,7 @@ There are two things you can do about this warning:
 (add-hook 'js2-mode-hook (lambda ()
 			   (tern-mode)
 			   (add-to-list 'company-backends 'company-tern)
-			   (add-hook 'xref-backend-functions #'xref-js2-xref-backend)
-			   (highlight-parentheses-mode)))
+			   (add-hook 'xref-backend-functions #'xref-js2-xref-backend)))
 (define-key tern-mode-keymap (kbd "M-.") nil)
 (define-key tern-mode-keymap (kbd "M-,") nil)
 (add-hook 'js2-mode-hook 'electric-pair-mode)
@@ -184,8 +181,7 @@ There are two things you can do about this warning:
 ;; Webmodes
 (add-hook 'web-mode-hook (lambda ()
 			   (electric-pair-mode)
-			   (aggressive-indent-mode)
-			   (highlight-parentheses-mode)))
+			   (aggressive-indent-mode)))
 
 ;; CUSTOM KEY BINDINGS
 (global-set-key (kbd "S-SPC") 'company-complete)
