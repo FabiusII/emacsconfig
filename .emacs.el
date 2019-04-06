@@ -164,7 +164,8 @@ There are two things you can do about this warning:
 (add-hook 'js2-mode-hook (lambda ()
 			   (tern-mode)
 			   (add-to-list 'company-backends 'company-tern)
-			   (add-hook 'xref-backend-functions #'xref-js2-xref-backend)))
+			   (add-hook 'xref-backend-functions #'xref-js2-xref-backend)
+			   (highlight-parentheses-mode)))
 (define-key tern-mode-keymap (kbd "M-.") nil)
 (define-key tern-mode-keymap (kbd "M-,") nil)
 (add-hook 'js2-mode-hook 'electric-pair-mode)
@@ -183,7 +184,8 @@ There are two things you can do about this warning:
 ;; Webmodes
 (add-hook 'web-mode-hook (lambda ()
 			   (electric-pair-mode)
-			   (aggressive-indent-mode)))
+			   (aggressive-indent-mode)
+			   (highlight-parentheses-mode)))
 
 ;; CUSTOM KEY BINDINGS
 (global-set-key (kbd "S-SPC") 'company-complete)
@@ -194,7 +196,7 @@ There are two things you can do about this warning:
 
 (global-hl-line-mode +1)
 (setq mac-command-modifier 'meta)
-
+(setq org-log-done t)
 (provide '.emacs)
 ;;; .emacs.el ends here
 (put 'upcase-region 'disabled nil)
