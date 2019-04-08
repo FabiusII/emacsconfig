@@ -50,9 +50,11 @@ There are two things you can do about this warning:
 (require 'ag)
 (require 'company-tern)
 (require 'rvm)
+(require 'which-key)
 
 (rvm-use-default)
 (show-paren-mode)
+(which-key-mode)
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
@@ -189,6 +191,8 @@ There are two things you can do about this warning:
 
 (global-set-key (kbd "M-n") 'forward-paragraph)
 (global-set-key (kbd "M-p") 'backward-paragraph)
+
+(global-set-key (kbd "C-x g") 'magit-status)
 
 (global-hl-line-mode +1)
 (setq mac-command-modifier 'meta)
