@@ -185,6 +185,11 @@ There are two things you can do about this warning:
 			   (electric-pair-mode)
 			   (aggressive-indent-mode)))
 
+;; Groovy
+(add-hook 'groovy-mode-hook (lambda ()
+			      (electric-pair-mode)
+			      (aggressive-indent-mode)))
+
 ;; CUSTOM KEY BINDINGS
 (global-set-key (kbd "S-SPC") 'company-complete)
 (global-set-key (kbd "C-;") 'er/expand-region)
