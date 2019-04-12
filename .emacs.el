@@ -24,11 +24,11 @@ There are two things you can do about this warning:
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("d74fe1508cff43708fa2f97c4bf58d19f0e002b2e0c92bf958bf483113b7d89d" "1436d643b98844555d56c59c74004eb158dc85fc55d2e7205f8d9b8c860e177f" default)))
+    ("9b35c097a5025d5da1c97dba45fed027e4fb92faecbd2f89c2a79d2d80975181" "2540689fd0bc5d74c4682764ff6c94057ba8061a98be5dd21116bf7bf301acfb" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d74fe1508cff43708fa2f97c4bf58d19f0e002b2e0c92bf958bf483113b7d89d" "1436d643b98844555d56c59c74004eb158dc85fc55d2e7205f8d9b8c860e177f" default)))
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))))
+    (flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -65,8 +65,10 @@ There are two things you can do about this warning:
 (add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 
-(set-frame-font "Monaco 13")
-(load-theme 'gruvbox)
+(set-frame-font "Fira Code 14")
+(load-theme 'flatland)
+(setq ring-bell-function 'ignore)
+
 (setq exec-path (append exec-path '("/usr/local/bin" "/usr/local/Cellar/node/11.3.0_1/bin")))
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/Cellar/node/11.3.0_1/bin"))
@@ -197,7 +199,9 @@ There are two things you can do about this warning:
 (global-set-key (kbd "M-n") 'forward-paragraph)
 (global-set-key (kbd "M-p") 'backward-paragraph)
 
-(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x g s") 'magit-status)
+(global-set-key (kbd "C-x g l") 'magit-log)
+(global-set-key (kbd "C-x g d") 'magit-diff)
 
 (global-hl-line-mode +1)
 (setq mac-command-modifier 'meta)
