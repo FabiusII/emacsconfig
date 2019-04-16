@@ -28,7 +28,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))))
+    (rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -56,6 +56,7 @@ There are two things you can do about this warning:
 (rvm-use-default)
 (show-paren-mode)
 (which-key-mode)
+(rainbow-delimiters-mode)
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
@@ -67,7 +68,7 @@ There are two things you can do about this warning:
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 
 (set-frame-font "Fira Code 14")
-(load-theme 'flatland)
+(load-theme 'gruvbox)
 ;(fira-code-mode)
 (setq ring-bell-function 'ignore)
 
