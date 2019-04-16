@@ -51,6 +51,7 @@ There are two things you can do about this warning:
 (require 'company-tern)
 (require 'rvm)
 (require 'which-key)
+;(load "~/repos/emacsconfig/fira-code-ligatures.el")
 
 (rvm-use-default)
 (show-paren-mode)
@@ -67,6 +68,7 @@ There are two things you can do about this warning:
 
 (set-frame-font "Fira Code 14")
 (load-theme 'flatland)
+;(fira-code-mode)
 (setq ring-bell-function 'ignore)
 
 (setq exec-path (append exec-path '("/usr/local/bin" "/usr/local/Cellar/node/11.3.0_1/bin")))
@@ -202,6 +204,10 @@ There are two things you can do about this warning:
 (global-set-key (kbd "C-x g s") 'magit-status)
 (global-set-key (kbd "C-x g l") 'magit-log)
 (global-set-key (kbd "C-x g d") 'magit-diff)
+(global-set-key (kbd "C-x g b") 'magit-blame)
+
+(global-set-key (kbd "M-1") 'windmove-left)
+(global-set-key (kbd "M-2") 'windmove-right)
 
 (global-hl-line-mode +1)
 (setq mac-command-modifier 'meta)
