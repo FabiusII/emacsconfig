@@ -53,11 +53,6 @@ There are two things you can do about this warning:
 (require 'which-key)
 ;(load "~/repos/emacsconfig/fira-code-ligatures.el")
 
-(rvm-use-default)
-(show-paren-mode)
-(which-key-mode)
-(rainbow-delimiters-mode)
-
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
 (add-to-list 'auto-mode-alist '("\\.spec\\'" . groovy-mode))
@@ -75,6 +70,7 @@ There are two things you can do about this warning:
 (setq exec-path (append exec-path '("/usr/local/bin" "/usr/local/Cellar/node/11.3.0_1/bin")))
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/Cellar/node/11.3.0_1/bin"))
+
 (setq ido-enable-flex-matching t)
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "M-n") nil)
@@ -102,6 +98,13 @@ There are two things you can do about this warning:
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'after-init-hook 'display-line-numbers-mode)
 (add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'after-init-hook 'rvm-use-default)
+(add-hook 'after-init-hook 'show-paren-mode)
+(add-hook 'after-init-hook 'which-key-mode)
+(add-hook 'after-init-hook 'rainbow-delimiters-mode)
+(add-hook 'after-init-hook 'global-magit-file-mode)
+(with-eval-after-load 'magit-file-mode
+  (define-key magit-file-mode-map (kbd "C-c g") 'magit-file-dispatch))
 
 (add-hook 'after-init-hook 'projectile-global-mode)
 (projectile-mode +1)
@@ -201,11 +204,6 @@ There are two things you can do about this warning:
 
 (global-set-key (kbd "M-n") 'forward-paragraph)
 (global-set-key (kbd "M-p") 'backward-paragraph)
-
-(global-set-key (kbd "C-x g s") 'magit-status)
-(global-set-key (kbd "C-x g l") 'magit-log)
-(global-set-key (kbd "C-x g d") 'magit-diff)
-(global-set-key (kbd "C-x g b") 'magit-blame)
 
 (global-set-key (kbd "M-1") 'windmove-left)
 (global-set-key (kbd "M-2") 'windmove-right)
