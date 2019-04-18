@@ -103,8 +103,6 @@ There are two things you can do about this warning:
 (add-hook 'after-init-hook 'which-key-mode)
 (add-hook 'after-init-hook 'rainbow-delimiters-mode)
 (add-hook 'after-init-hook 'global-magit-file-mode)
-(with-eval-after-load 'magit-file-mode
-  (define-key magit-file-mode-map (kbd "C-c g") 'magit-file-dispatch))
 
 (add-hook 'after-init-hook 'projectile-global-mode)
 (projectile-mode +1)
