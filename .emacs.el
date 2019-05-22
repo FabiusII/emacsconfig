@@ -74,7 +74,7 @@ There are two things you can do about this warning:
 (setq doom-themes-enable-bold t
       doom-themes-enable-italic t)
 
-(load-theme 'doom-vibrant)
+(load-theme 'doom-molokai)
 ;; (fira-code-mode)
 ;; (setq ring-bell-function 'ignore)
 (doom-themes-visual-bell-config)
