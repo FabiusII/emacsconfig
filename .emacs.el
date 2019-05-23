@@ -116,6 +116,8 @@ There are two things you can do about this warning:
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
 (setq ivy-count-format "(%d/%d) ")
+(setq ivy-re-builders-alist
+      '((t . ivy--regex-fuzzy)))
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'after-init-hook 'display-line-numbers-mode)
@@ -132,6 +134,8 @@ There are two things you can do about this warning:
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(when (featurep 'ivy)
+  (setq projectile-completion-system 'ivy))
 
 (key-chord-define-global "fj" 'avy-goto-word-1)
 (key-chord-define-global "jf" 'avy-goto-word-1)
