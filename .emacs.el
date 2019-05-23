@@ -117,8 +117,7 @@ There are two things you can do about this warning:
 (setq ivy-use-virtual-buffers t)
 (setq ivy-count-format "(%d/%d) ")
 (setq ivy-re-builders-alist
-      '((swiper . ivy--regex)
-	(t . ivy--regex-fuzzy)))
+      '((t . ivy--regex-plus)))
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'after-init-hook 'display-line-numbers-mode)
