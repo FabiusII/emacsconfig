@@ -29,7 +29,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (counsel ivy doom-modeline all-the-icons-dired doom-themes sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))))
+    (amx counsel ivy doom-modeline all-the-icons-dired doom-themes sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -78,6 +78,7 @@ There are two things you can do about this warning:
       doom-themes-enable-italic t)
 
 (load-theme 'doom-molokai)
+(set-face-attribute 'hl-line nil :inherit nil :background "#333333")
 ;; (fira-code-mode)
 ;; (setq ring-bell-function 'ignore)
 (doom-themes-visual-bell-config)
@@ -239,6 +240,9 @@ There are two things you can do about this warning:
 (global-set-key (kbd "C-s") 'swiper)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "C-c k") 'counsel-ag)
+(global-set-key (kbd "C-c i") 'ivy-resume)
+(global-set-key (kbd "C-c m") 'counsel-imenu)
 
 (setq mac-command-modifier 'meta)
 (setq org-log-done t)
