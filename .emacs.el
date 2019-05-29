@@ -159,6 +159,9 @@ There are two things you can do about this warning:
 	    (yas-minor-mode 1)
 	    (cljr-add-keybindings-with-prefix "C-c C-m")))
 
+(add-hook 'clojurescript-mode-hook
+	  (company-flx-mode -1)) ;; flx completion doesnt work for clojurescript
+
 (eval-after-load 'clojure-mode
   '(define-clojure-indent
      (wrap-result 'defun)
