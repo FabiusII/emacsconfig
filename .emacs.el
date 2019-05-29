@@ -78,7 +78,6 @@ There are two things you can do about this warning:
       doom-themes-enable-italic t)
 
 (load-theme 'doom-molokai)
-(set-face-attribute 'hl-line nil :inherit nil :background "#333333")
 ;; (fira-code-mode)
 ;; (setq ring-bell-function 'ignore)
 (doom-themes-visual-bell-config)
@@ -110,15 +109,14 @@ There are two things you can do about this warning:
 (setq eldoc-echo-area-use-multiline-p t)
 
 ;; GLOBAL MODES
-
-;; (ido-mode t)
-;; (ido-everywhere t)
-
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
 (setq ivy-count-format "(%d/%d) ")
 (setq ivy-re-builders-alist
       '((t . ivy--regex-plus)))
+(ivy-add-actions
+ 'ivy-switch-buffer
+ '(("k" kill-buffer "kill")))
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'after-init-hook 'display-line-numbers-mode)
