@@ -113,7 +113,10 @@ There are two things you can do about this warning:
 (setq ivy-use-virtual-buffers t)
 (setq ivy-count-format "(%d/%d) ")
 (setq ivy-re-builders-alist
-      '((t . ivy--regex-plus)))
+      '((swiper . ivy--regex)
+	(counsel-ag . ivy--regex-plus)
+	(t . ivy--regex-fuzzy)))
+
 (ivy-add-actions
  'ivy-switch-buffer
  '(("k" kill-buffer "kill")))
