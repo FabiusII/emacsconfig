@@ -83,6 +83,7 @@ There are two things you can do about this warning:
 (doom-themes-visual-bell-config)
 (doom-themes-org-config)
 (set-face-attribute 'hl-line nil :inherit nil :background "#333333")
+(set-face-attribute 'region nil :underline "#fb2874")
 
 (setq exec-path (append exec-path '("/usr/local/bin" "/usr/local/Cellar/node/11.3.0_1/bin")))
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
