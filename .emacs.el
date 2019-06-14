@@ -82,8 +82,9 @@ There are two things you can do about this warning:
 ;; (setq ring-bell-function 'ignore)
 (doom-themes-visual-bell-config)
 (doom-themes-org-config)
-(set-face-attribute 'hl-line nil :inherit nil :background "#333333")
+(global-hl-line-mode +1)
 (set-face-attribute 'region nil :underline "#fb2874")
+(set-face-attribute 'hl-line nil :background "#333333")
 
 (setq exec-path (append exec-path '("/usr/local/bin" "/usr/local/Cellar/node/11.3.0_1/bin")))
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
@@ -240,8 +241,6 @@ There are two things you can do about this warning:
 
 (global-set-key (kbd "M-1") 'windmove-left)
 (global-set-key (kbd "M-2") 'windmove-right)
-
-(global-hl-line-mode +1)
 
 ;; ivy bindings
 (global-set-key (kbd "C-s") 'swiper)
