@@ -244,7 +244,7 @@ There are two things you can do about this warning:
 
 ;; enable only when projectile is active
 (when (featurep 'projectile)
-  (global-set-key (kbd "M-t") 'project-find-file))
+  (global-set-key (kbd "M-t") 'projectile-find-file))
 
 ;; ivy bindings
 (when (featurep 'ivy)
