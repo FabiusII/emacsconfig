@@ -146,16 +146,21 @@ There are two things you can do about this warning:
 (key-chord-define-global "jf" 'avy-goto-word-1)
 (key-chord-mode 1)
 
-;; ELISP and IELM MODES
+;; ELISP, ESHELL and IELM MODES
 (add-hook 'emacs-lisp-mode-hook 'highlight-defined-mode)
+
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
 (add-hook 'ielm-mode-hook 'paredit-mode)
+(add-hook 'eshell-mode-hook 'paredit-mode)
+
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'eshell-mode-hook 'turn-on-eldoc-mode)
 
 ;; CLOJURE and CIDER MODES
 (add-hook 'clojure-mode-hook 'paredit-mode)
 (add-hook 'cider-repl-mode-hook 'paredit-mode)
+
 (add-hook 'cider-repl-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'clojure-mode-hook 'turn-on-eldoc-mode)
 
@@ -259,6 +264,9 @@ There are two things you can do about this warning:
 (setq org-log-done t)
 (setq split-height-threshold nil)
 (setq split-width-threshold 160)
+
+(load-file "./eshellrc.el")
+
 (provide '.emacs)
 ;;; .emacs.el ends here
 (put 'upcase-region 'disabled nil)

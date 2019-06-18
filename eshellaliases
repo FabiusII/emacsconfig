@@ -1,0 +1,4 @@
+alias pg pg_ctl start -D ~/pgdata
+alias gcmsg git commit -m
+alias gst git status
+alias ll ls -l
