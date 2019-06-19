@@ -126,7 +126,7 @@ There are two things you can do about this warning:
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'after-init-hook 'display-line-numbers-mode)
-(add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'after-init-hook 'company-mode)
 (add-hook 'after-init-hook 'rvm-use-default)
 (add-hook 'after-init-hook 'show-paren-mode)
 (add-hook 'after-init-hook 'which-key-mode)
@@ -166,7 +166,6 @@ There are two things you can do about this warning:
 
 (add-hook 'clojure-mode-hook
 	  (lambda ()
-	    (company-flx-mode +1)
 	    (clj-refactor-mode 1)
 	    (yas-minor-mode 1)
 	    (cljr-add-keybindings-with-prefix "C-c C-m")))
