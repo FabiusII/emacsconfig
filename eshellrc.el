@@ -5,7 +5,7 @@
 
 ;;; Code:
 
-(require 'eshell)
+(require 'em-term)
 
 (add-to-list 'eshell-visual-commands "top")
 (add-to-list 'eshell-visual-options "git" "--help")
