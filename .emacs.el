@@ -97,8 +97,6 @@ There are two things you can do about this warning:
   (define-key company-active-map (kbd "M-p") nil)
   (define-key company-active-map (kbd "C-n") #'company-select-next)
   (define-key company-active-map (kbd "C-p") #'company-select-previous)
-  (add-hook 'company-mode-hook (lambda ()
-				 (add-to-list 'company-backends 'company-capf)))
   (company-flx-mode +1)
   (setq company-idle-delay 0.5))
 
@@ -110,6 +108,14 @@ There are two things you can do about this warning:
 
 (setq eldoc-idle-delay 0)
 (setq eldoc-echo-area-use-multiline-p t)
+
+(defun rename-local-symbol ()
+  (interactive)
+  (let* ((symbol (thing-at-point 'symbol))
+	 (prompt (message "replace %s with: " symbol))
+	 (replacement (read-string prompt))
+	 (scope (bounds-of-thing-at-point 'defun)))
+    (query-replace symbol replacement 'delimited (car scope) (cdr scope))))
 
 ;; GLOBAL MODES
 (ivy-mode 1)
@@ -126,7 +132,7 @@ There are two things you can do about this warning:
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'after-init-hook 'display-line-numbers-mode)
-(add-hook 'after-init-hook 'company-mode)
+(add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'after-init-hook 'rvm-use-default)
 (add-hook 'after-init-hook 'show-paren-mode)
 (add-hook 'after-init-hook 'which-key-mode)
@@ -169,9 +175,6 @@ There are two things you can do about this warning:
 	    (clj-refactor-mode 1)
 	    (yas-minor-mode 1)
 	    (cljr-add-keybindings-with-prefix "C-c C-m")))
-
-(add-hook 'clojurescript-mode-hook
-	  (company-flx-mode -1)) ;; flx completion doesnt work for clojurescript
 
 (eval-after-load 'clojure-mode
   '(define-clojure-indent
