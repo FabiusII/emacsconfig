@@ -109,13 +109,15 @@ There are two things you can do about this warning:
 (setq eldoc-idle-delay 0)
 (setq eldoc-echo-area-use-multiline-p t)
 
-(defun rename-local-symbol ()
-  (interactive)
-  (let* ((symbol (thing-at-point 'symbol))
-	 (prompt (message "replace %s with: " symbol))
-	 (replacement (read-string prompt))
-	 (scope (bounds-of-thing-at-point 'defun)))
-    (query-replace symbol replacement 'delimited (car scope) (cdr scope))))
+(defun is-cljs-file (filename)
+  (when filename
+    (string-match "\\.cljs\\'" filename)))
+
+(add-hook 'buffer-list-update-hook
+	  (lambda ()
+	    (if (is-cljs-file buffer-file-name)
+		(company-flx-mode -1)
+	      (company-flx-mode +1))))
 
 ;; GLOBAL MODES
 (ivy-mode 1)
@@ -267,6 +269,7 @@ There are two things you can do about this warning:
 (setq split-height-threshold nil)
 (setq split-width-threshold 160)
 
+(load-file "~/repos/emacsconfig/util.el")
 (load-file "~/repos/emacsconfig/eshellrc.el")
 
 (provide '.emacs)
