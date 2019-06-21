@@ -77,14 +77,14 @@ There are two things you can do about this warning:
 (setq doom-themes-enable-bold t
       doom-themes-enable-italic t)
 
-(load-theme 'doom-molokai)
+(load-theme 'gruvbox)
 ;; (fira-code-mode)
 ;; (setq ring-bell-function 'ignore)
 (doom-themes-visual-bell-config)
 (doom-themes-org-config)
 (global-hl-line-mode +1)
-(set-face-attribute 'region nil :underline "#fb2874")
-(set-face-attribute 'hl-line nil :background "#333333")
+;(set-face-attribute 'region nil :underline "#fb2874")
+;(set-face-attribute 'hl-line nil :background "#333333")
 
 (setq exec-path (append exec-path '("/usr/local/bin" "/usr/local/Cellar/node/11.3.0_1/bin")))
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
@@ -251,6 +251,11 @@ There are two things you can do about this warning:
 (global-set-key (kbd "M-1") 'windmove-left)
 (global-set-key (kbd "M-2") 'windmove-right)
 
+(load-file "~/repos/emacsconfig/util.el")
+(global-set-key (kbd "C-c r l") 'rename-local-symbol)
+(global-set-key (kbd "C-c r b") 'rename-in-buffer)
+(global-set-key (kbd "C-c r p") 'rename-in-project)
+
 ;; enable only when projectile is active
 (when (featurep 'projectile)
   (global-set-key (kbd "M-t") 'projectile-find-file))
@@ -269,7 +274,7 @@ There are two things you can do about this warning:
 (setq split-height-threshold nil)
 (setq split-width-threshold 160)
 
-(load-file "~/repos/emacsconfig/util.el")
+
 (load-file "~/repos/emacsconfig/eshellrc.el")
 
 (provide '.emacs)
