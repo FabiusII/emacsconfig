@@ -40,7 +40,7 @@ Only the user can detect if the text is actually a reference to the symbol."
 
 (defun util/ag-result-string->list (result-string)
   "Turn a ag RESULT-STRING into a list of filenames."
-  (let* ((lines (split-string result-string "\n")))
+  (let ((lines (split-string result-string "\n")))
     (util/get-filenames lines '())))
 
 (defun util/open-and-replace-in-files (files symbol replacement)
@@ -54,13 +54,12 @@ Only the user can detect if the text is actually a reference to the symbol."
   "Renaming a symbol in the current buffer based on its text content alone.
 Before renaming each single occurance, the user is asked for permission.
 Only the user can detect if the text is actually a reference to the symbol.
-Requies and projectile and ag (aka the_silver_searcher)."
+Requies and projectile and ag (aka the_silver_searcher).
+The latter must be installed on your system, not necessarily EMACS."
   (interactive)
   (when (and (featurep 'projectile)
-	     (featurep 'ag)
 	     (featurep 'subr-x))
     (require 'projectile)
-    (require 'ag)
     (require 'subr-x)
     (let ((old-buffer (current-buffer))
 	  (symbol (thing-at-point 'symbol)))

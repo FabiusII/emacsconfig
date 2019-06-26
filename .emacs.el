@@ -60,6 +60,8 @@ There are two things you can do about this warning:
 (require 'swiper)
 (require 'counsel)
 
+(setq-default indent-tabs-mode nil)
+
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
 (add-to-list 'auto-mode-alist '("\\.spec\\'" . groovy-mode))
