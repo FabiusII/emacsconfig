@@ -29,7 +29,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (json-mode kibit-helper amx counsel ivy doom-modeline all-the-icons-dired doom-themes sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck-joker flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))))
+    (flycheck-clj-kondo json-mode kibit-helper amx counsel ivy doom-modeline all-the-icons-dired sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -43,7 +43,7 @@ There are two things you can do about this warning:
 (require 'company)
 (require 'eldoc)
 (require 'clj-refactor)
-(require 'flycheck-joker)
+(require 'flycheck-clj-kondo)
 (require 'ido)
 (require 'js2-mode)
 (require 'js2-refactor)
@@ -52,14 +52,12 @@ There are two things you can do about this warning:
 (require 'company-tern)
 (require 'rvm)
 (require 'which-key)
-(require 'doom-themes)
 (require 'doom-modeline)
 (require 'magit)
 (require 'projectile)
 (require 'ivy)
 (require 'swiper)
 (require 'counsel)
-
 (setq-default indent-tabs-mode nil)
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
@@ -72,18 +70,13 @@ There are two things you can do about this warning:
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 
 (tool-bar-mode 0)
-(set-frame-font "Fira Code 14")
+(set-frame-font "Monaco 13")
 
 (doom-modeline-mode 1)
-
-(setq doom-themes-enable-bold t
-      doom-themes-enable-italic t)
 
 (load-theme 'gruvbox)
 ;; (fira-code-mode)
 ;; (setq ring-bell-function 'ignore)
-(doom-themes-visual-bell-config)
-(doom-themes-org-config)
 (global-hl-line-mode +1)
 ;(set-face-attribute 'region nil :underline "#fb2874")
 ;(set-face-attribute 'hl-line nil :background "#333333")
@@ -199,6 +192,7 @@ There are two things you can do about this warning:
      (facts 'defun)
      (conditional 'defun)
      (wrap-clean-transaction 'defun)
+     (leave-clean-db 'defun)
      (GET 2)
      (POST 2)
      (PUT 2)
@@ -252,6 +246,8 @@ There are two things you can do about this warning:
 
 (global-set-key (kbd "M-1") 'windmove-left)
 (global-set-key (kbd "M-2") 'windmove-right)
+
+(global-set-key (kbd "C-x M-b") 'pop-global-mark)
 
 (load-file "~/repos/emacsconfig/util.el")
 (global-set-key (kbd "C-c r l") 'rename-local-symbol)
