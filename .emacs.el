@@ -202,7 +202,7 @@ There are two things you can do about this warning:
      (DELETE 2)
      (HEAD 2)
      (ANY 2)
-     (context 2)
+     (context 2)))
 
 
 ;; JS Modes
@@ -274,7 +274,6 @@ There are two things you can do about this warning:
 (setq org-log-done t)
 (setq split-height-threshold nil)
 (setq split-width-threshold 160)
-
 
 (load-file "~/repos/emacsconfig/eshellrc.el")
 
