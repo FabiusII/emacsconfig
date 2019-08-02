@@ -281,7 +281,6 @@ There are two things you can do about this warning:
 (setq split-height-threshold nil)
 (setq split-width-threshold 160)
 
-
 (load-file "~/repos/emacsconfig/eshellrc.el")
 
 (provide '.emacs)
