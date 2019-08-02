@@ -29,7 +29,11 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (treemacs-projectile flycheck-clj-kondo json-mode kibit-helper amx counsel ivy doom-modeline all-the-icons-dired sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))))
+    (rubocop ruby-electric ruby-test-mode treemacs-projectile flycheck-clj-kondo json-mode kibit-helper amx counsel ivy doom-modeline all-the-icons-dired sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode)))
+ '(safe-local-variable-values
+   (quote
+    ((cider-ns-refresh-after-fn . "integrant.repl/resume")
+     (cider-ns-refresh-before-fn . "integrant.repl/suspend")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -95,8 +99,8 @@ There are two things you can do about this warning:
   (define-key company-active-map (kbd "M-p") nil)
   (define-key company-active-map (kbd "C-n") #'company-select-next)
   (define-key company-active-map (kbd "C-p") #'company-select-previous)
-  (company-flx-mode +1)
-  (setq company-idle-delay 0.5))
+  ;(company-flx-mode +1)
+  (setq company-idle-delay 0.2))
 
 (with-eval-after-load 'magit-status
   (define-key magit-status-mode-map (kbd "M-1") nil)
@@ -202,7 +206,7 @@ There are two things you can do about this warning:
      (DELETE 2)
      (HEAD 2)
      (ANY 2)
-     (context 2)
+     (context 2)))
 
 
 ;; JS Modes
@@ -224,8 +228,10 @@ There are two things you can do about this warning:
 (add-hook 'ruby-mode-hook (lambda ()
 			    (robe-mode)
 			    (add-to-list 'company-backends 'company-robe)
-			    (electric-pair-mode)
-			    (aggressive-indent-mode)))
+			    (ruby-electric-mode)
+			    (aggressive-indent-mode)
+                            (rubocop-mode)
+                            (ruby-test-mode)))
 
 (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
   (rvm-activate-corresponding-ruby))
