@@ -48,6 +48,7 @@ Only the user can detect if the text is actually a reference to the symbol."
   (when files
     (find-file (car files))
     (query-replace symbol replacement 'delimited (point-min) (point-max))
+    (save-buffer)
     (util/open-and-replace-in-files (cdr files) symbol replacement)))
 
 (defun rename-in-project ()
