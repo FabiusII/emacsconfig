@@ -121,7 +121,7 @@ There are two things you can do about this warning:
 (add-hook 'buffer-list-update-hook
 	  (lambda ()
 	    (if (is-cljs-file buffer-file-name)
-		(company-flx-mode -1)
+                (company-flx-mode -1)
 	      (company-flx-mode +1))))
 
 ;; GLOBAL MODES
@@ -136,6 +136,9 @@ There are two things you can do about this warning:
 (ivy-add-actions
  'ivy-switch-buffer
  '(("k" kill-buffer "kill")))
+
+(define-key ivy-minibuffer-map (kbd "C-j") #'ivy-immediate-done)
+(define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'after-init-hook 'display-line-numbers-mode)
