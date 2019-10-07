@@ -29,7 +29,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (markdown-mode rubocop ruby-electric ruby-test-mode treemacs-projectile flycheck-clj-kondo json-mode kibit-helper amx counsel ivy doom-modeline all-the-icons-dired sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode)))
+    (smartparens alchemist elixir-yasnippets elixir-mode markdown-mode rubocop ruby-electric ruby-test-mode treemacs-projectile flycheck-clj-kondo json-mode kibit-helper amx counsel ivy doom-modeline all-the-icons-dired sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode)))
  '(safe-local-variable-values
    (quote
     ((cider-ns-refresh-after-fn . "integrant.repl/resume")
@@ -118,11 +118,11 @@ There are two things you can do about this warning:
   (when filename
     (string-match "\\.cljs\\'" filename)))
 
-(add-hook 'buffer-list-update-hook
-	  (lambda ()
-	    (if (is-cljs-file buffer-file-name)
-                (company-flx-mode -1)
-	      (company-flx-mode +1))))
+;; (add-hook 'buffer-list-update-hook
+;; 	  (lambda ()
+;; 	    (if (is-cljs-file buffer-file-name)
+;;                 (company-flx-mode -1)
+;; 	      (company-flx-mode +1))))
 
 ;; GLOBAL MODES
 (ivy-mode 1)
@@ -230,6 +230,13 @@ There are two things you can do about this warning:
 (add-hook 'js2-mode-hook 'electric-pair-mode)
 (add-hook 'js2-mode-hook 'aggressive-indent-mode)
 
+;; Elixir modes
+(add-hook 'elixir-mode-hook
+          (lambda ()
+            (smartparens-mode)
+            (add-hook 'before-save-hook 'elixir-format nil t)))
+
+
 ;; Ruby modes
 (add-hook 'ruby-mode-hook (lambda ()
 			    (robe-mode)
@@ -261,6 +268,8 @@ There are two things you can do about this warning:
 
 (global-set-key (kbd "M-1") 'windmove-left)
 (global-set-key (kbd "M-2") 'windmove-right)
+
+(global-set-key (kbd "C-x B") 'switch-to-buffer-other-window)
 
 (global-set-key (kbd "C-x M-b") 'pop-global-mark)
 
