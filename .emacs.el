@@ -29,7 +29,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (auto-package-update use-package markdown-mode rubocop ruby-electric ruby-test-mode treemacs-projectile flycheck-clj-kondo json-mode kibit-helper amx counsel ivy doom-modeline all-the-icons-dired sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode)))
+    (auto-package-update use-package lsp-ui company-lsp lsp-mode markdown-mode rubocop ruby-electric ruby-test-mode treemacs-projectile flycheck-clj-kondo json-mode kibit-helper amx counsel ivy doom-modeline all-the-icons-dired sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode)))
  '(safe-local-variable-values
    (quote
     ((cider-ns-refresh-after-fn . "integrant.repl/resume")
@@ -277,12 +277,16 @@ There are two things you can do about this warning:
      (context 2)))
 
 ;; Ruby modes
-(add-hook 'ruby-mode-hook (lambda ()
-			    (robe-mode)
-			    (add-to-list 'company-backends 'company-robe)
-			    (ruby-electric-mode)
-                            (rubocop-mode)
-                            (ruby-test-mode)))
+(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+(add-hook 'ruby-mode-hook
+          (lambda ()
+            (lsp)
+            (push 'company-lsp company-backends)
+            (ruby-electric-mode)
+            (aggressive-indent-mode)
+            (rubocop-mode)
+            (ruby-test-mode)
+            (global-set-key (kbd "M-RET") 'rubocop-autocorrect-current-file)))
 
 ;; Webmodes
 (add-hook 'web-mode-hook 'electric-pair-mode)
