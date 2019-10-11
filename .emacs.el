@@ -41,9 +41,6 @@ There are two things you can do about this warning:
  ;; If there is more than one, they won't work right.
  )
 
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
-
 (eval-when-compile
   (require 'use-package))
 
@@ -60,6 +57,9 @@ There are two things you can do about this warning:
 
 (use-package exec-path-from-shell
   :ensure t)
+
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 
 (use-package auto-package-update
   :ensure t
