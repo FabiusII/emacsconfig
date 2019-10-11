@@ -29,7 +29,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (auto-package-update use-package markdown-mode rubocop ruby-electric ruby-test-mode treemacs-projectile flycheck-clj-kondo json-mode kibit-helper amx counsel ivy doom-modeline all-the-icons-dired sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode)))
+    (auto-package-update use-package markdown-mode rubocop ruby-electric ruby-test-mode treemacs-projectile flycheck-clj-kondo json-mode kibit-helper amx counsel ivy doom-modeline all-the-icons-dired sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode)))
  '(safe-local-variable-values
    (quote
     ((cider-ns-refresh-after-fn . "integrant.repl/resume")
@@ -48,13 +48,7 @@ There are two things you can do about this warning:
   (require 'use-package))
 
 ;; Custom Settings
-(require 'js2-mode)
-(require 'js2-refactor)
-(require 'xref-js2)
 (require 'ag)
-(require 'company-tern)
-(require 'rvm)
-(require 'which-key)
 (require 'doom-modeline)
 (require 'magit)
 (require 'projectile)
@@ -80,7 +74,7 @@ There are two things you can do about this warning:
   :bind
   (("S-SPC" . 'company-complete)
    :map company-active-map
-   ("M-n". nil)
+   ("M-n" . nil)
    ("M-p" . nil)
    ("C-n" . 'company-select-next)
    ("C-p" . 'company-select-previous))
@@ -88,34 +82,6 @@ There are two things you can do about this warning:
   (company-flx-mode +1)
   (setq company-idle-delay 0.2)
   (global-company-mode))
-
-(with-eval-after-load 'clojure-mode
-  '(define-clojure-indent
-     (wrap-result 'defun)
-     (handle-error 'defun)
-     (context-defn 'defun)
-     (context-fn 'defun)
-     (context-fn-stub 'defun)
-     (defroutes 'defun)
-     (testing 'defun)
-     (feature 'defun)
-     (scenario 'defun)
-     (cond-let 'defun)
-     (if-with-open 'defun)
-     (when-let* 'defun)
-     (fnk 'defun)
-     (fact 'defun)
-     (facts 'defun)
-     (conditional 'defun)
-     (wrap-clean-transaction 'defun)
-     (leave-clean-db 'defun)
-     (GET 2)
-     (POST 2)
-     (PUT 2)
-     (DELETE 2)
-     (HEAD 2)
-     (ANY 2)
-     (context 2)))
 
 (use-package clojure-mode
   :ensure t
@@ -126,7 +92,9 @@ There are two things you can do about this warning:
 
 (use-package clj-refactor
   :ensure t
-  :hook ((clojure-mode) . clj-refactor-mode))
+  :hook ((clojure-mode) . clj-refactor-mode)
+  :config
+  (cljr-add-keybindings-with-prefix "C-c C-m"))
 
 (use-package flycheck-clj-kondo
   :ensure t
@@ -144,7 +112,56 @@ There are two things you can do about this warning:
   (setq eldoc-idle-delay 0)
   (setq eldoc-echo-area-use-multiline-p t))
 
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
+
+(use-package js2-mode
+  :ensure t
+  :commands js2-mode
+  :bind
+  (:map js2-mode-map
+        ("C-k" . 'js2r-kill)
+        ("M-." . nil))
+  :config
+  (add-hook 'js2-mode-hook 'js2-imenu-extras-mode)
+  (add-hook 'js2-mode-hook 'electric-pair-mode)
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+
+(use-package js2-refactor
+  :ensure t
+  :hook ((js2-mode) . js2-refactor-mode)
+  :config
+  (js2r-add-keybindings-with-prefix "C-c C-r"))
+
+(use-package tern
+  :ensure t
+  :bind
+  (:map tern-mode-keymap
+        ("M-." . nil)
+        ("M-," . nil))
+  :hook
+  ((js2-mode) . tern-mode))
+
+(use-package company-tern
+  :ensure t
+  :config
+  (add-to-list 'company-backends 'company-tern))
+
+(use-package xref-js2
+  :ensure t
+  :config
+  :hook ((js2-mode) . (add-hook 'xref-backend-functions #'xref-js2-xref-backend)))
+
+(use-package aggressive-indent
+  :ensure t
+  :hook
+  ((js2-mode
+    ruby-mode
+    groovy-mode
+    web-mode) . aggresive-indent-mode))
+
 (add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
 (add-to-list 'auto-mode-alist '("\\.spec\\'" . groovy-mode))
 (add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
@@ -199,9 +216,7 @@ There are two things you can do about this warning:
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'after-init-hook 'display-line-numbers-mode)
-(add-hook 'after-init-hook 'rvm-use-default)
 (add-hook 'after-init-hook 'show-paren-mode)
-(add-hook 'after-init-hook 'which-key-mode)
 (add-hook 'after-init-hook 'rainbow-delimiters-mode)
 (add-hook 'after-init-hook 'global-magit-file-mode)
 
@@ -231,45 +246,49 @@ There are two things you can do about this warning:
 
 (add-hook 'clojure-mode-hook
 	  (lambda ()
-	    (yas-minor-mode 1)
-	    (cljr-add-keybindings-with-prefix "C-c C-m")))
+	    (yas-minor-mode 1)))
 
-;; JS Modes
-(add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
-(add-hook 'js2-mode-hook #'js2-refactor-mode)
-(js2r-add-keybindings-with-prefix "C-c C-r")
-(define-key js2-mode-map (kbd "C-k") #'js2r-kill)
-(define-key js2-mode-map (kbd "M-.") nil)
-(add-hook 'js2-mode-hook (lambda ()
-			   (tern-mode)
-			   (add-to-list 'company-backends 'company-tern)
-			   (add-hook 'xref-backend-functions #'xref-js2-xref-backend)))
-(define-key tern-mode-keymap (kbd "M-.") nil)
-(define-key tern-mode-keymap (kbd "M-,") nil)
-(add-hook 'js2-mode-hook 'electric-pair-mode)
-(add-hook 'js2-mode-hook 'aggressive-indent-mode)
+(with-eval-after-load 'clojure-mode
+  '(define-clojure-indent
+     (wrap-result 'defun)
+     (handle-error 'defun)
+     (context-defn 'defun)
+     (context-fn 'defun)
+     (context-fn-stub 'defun)
+     (defroutes 'defun)
+     (testing 'defun)
+     (feature 'defun)
+     (scenario 'defun)
+     (cond-let 'defun)
+     (if-with-open 'defun)
+     (when-let* 'defun)
+     (fnk 'defun)
+     (fact 'defun)
+     (facts 'defun)
+     (conditional 'defun)
+     (wrap-clean-transaction 'defun)
+     (leave-clean-db 'defun)
+     (GET 2)
+     (POST 2)
+     (PUT 2)
+     (DELETE 2)
+     (HEAD 2)
+     (ANY 2)
+     (context 2)))
 
 ;; Ruby modes
 (add-hook 'ruby-mode-hook (lambda ()
 			    (robe-mode)
 			    (add-to-list 'company-backends 'company-robe)
 			    (ruby-electric-mode)
-			    (aggressive-indent-mode)
                             (rubocop-mode)
                             (ruby-test-mode)))
 
-(defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
-  (rvm-activate-corresponding-ruby))
-
 ;; Webmodes
-(add-hook 'web-mode-hook (lambda ()
-			   (electric-pair-mode)
-			   (aggressive-indent-mode)))
+(add-hook 'web-mode-hook 'electric-pair-mode)
 
 ;; Groovy
-(add-hook 'groovy-mode-hook (lambda ()
-			      (electric-pair-mode)
-			      (aggressive-indent-mode)))
+(add-hook 'groovy-mode-hook 'electric-pair-mode)
 
 ;; CUSTOM KEY BINDINGS
 (global-set-key (kbd "C-;") 'er/expand-region)
