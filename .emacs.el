@@ -158,9 +158,14 @@ There are two things you can do about this warning:
   :ensure t
   :hook
   ((js2-mode
-    ruby-mode
-    groovy-mode
-    web-mode) . aggresive-indent-mode))
+   ruby-mode
+   groovy-mode
+   web-mode) . aggressive-indent-mode))
+
+(use-package rvm
+  :ensure t
+  :hook
+  ((ruby-mode) . rvm-activate-corresponding-ruby))
 
 (add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
 (add-to-list 'auto-mode-alist '("\\.spec\\'" . groovy-mode))
@@ -283,7 +288,6 @@ There are two things you can do about this warning:
             (lsp)
             (push 'company-lsp company-backends)
             (ruby-electric-mode)
-            (aggressive-indent-mode)
             (rubocop-mode)
             (ruby-test-mode)
             (global-set-key (kbd "M-RET") 'rubocop-autocorrect-current-file)))
