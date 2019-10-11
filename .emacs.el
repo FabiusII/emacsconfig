@@ -29,7 +29,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (smartparens alchemist elixir-yasnippets elixir-mode markdown-mode rubocop ruby-electric ruby-test-mode treemacs-projectile flycheck-clj-kondo json-mode kibit-helper amx counsel ivy doom-modeline all-the-icons-dired sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode)))
+    (use-package smartparens alchemist markdown-mode rubocop ruby-electric ruby-test-mode treemacs-projectile flycheck-clj-kondo json-mode kibit-helper amx counsel ivy doom-modeline all-the-icons-dired sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm robe web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode)))
  '(safe-local-variable-values
    (quote
     ((cider-ns-refresh-after-fn . "integrant.repl/resume")
@@ -41,14 +41,13 @@ There are two things you can do about this warning:
  ;; If there is more than one, they won't work right.
  )
 
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
+(eval-when-compile
+  (require 'use-package))
 
 ;; Custom Settings
-(require 'clojure-mode)
-(require 'company)
-(require 'eldoc)
-(require 'clj-refactor)
-(require 'flycheck-clj-kondo)
-(require 'ido)
 (require 'js2-mode)
 (require 'js2-refactor)
 (require 'xref-js2)
@@ -65,128 +64,27 @@ There are two things you can do about this warning:
 
 (setq-default indent-tabs-mode nil)
 
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
-(add-to-list 'auto-mode-alist '("\\.spec\\'" . groovy-mode))
-(add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
-(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+(use-package exec-path-from-shell
+  :ensure t)
 
-(tool-bar-mode 0)
+(use-package use-package-ensure-system-package
+  :ensure t)
 
+(use-package company
+  :ensure t
+  :bind
+  (("S-SPC" . 'company-complete)
+   :map company-active-map
+   ("M-n". nil)
+   ("M-p" . nil)
+   ("C-n" . 'company-select-next)
+   ("C-p" . 'company-select-previous))
+  :config
+  (company-flx-mode +1)
+  (setq company-idle-delay 0.2)
+  (global-company-mode))
 
-(add-to-list 'default-frame-alist
-             '(font . "Inconsolata 16"))
-
-(set-frame-font "Inconsolata 16")
-
-(doom-modeline-mode 1)
-
-(load-theme 'gruvbox-dark-hard)
-;; (fira-code-mode)
-;; (setq ring-bell-function 'ignore)
-(global-hl-line-mode +1)
-;(set-face-attribute 'region nil :underline "#fb2874")
-;(set-face-attribute 'hl-line nil :background "#333333")
-
-(setq exec-path (append exec-path '("/usr/local/bin" "/usr/local/Cellar/node/11.3.0_1/bin")))
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/Cellar/node/11.3.0_1/bin"))
-
-(setq ido-enable-flex-matching t)
-
-(with-eval-after-load 'company
-  (define-key company-active-map (kbd "M-n") nil)
-  (define-key company-active-map (kbd "M-p") nil)
-  (define-key company-active-map (kbd "C-n") #'company-select-next)
-  (define-key company-active-map (kbd "C-p") #'company-select-previous)
-  ;(company-flx-mode +1)
-  (setq company-idle-delay 0.2))
-
-(with-eval-after-load 'magit-status
-  (define-key magit-status-mode-map (kbd "M-1") nil)
-  (define-key magit-status-mode-map (kbd "M-2") nil)
-  (define-key magit-status-mode-map (kbd "M-3") nil)
-  (define-key magit-status-mode-map (kbd "M-4") nil))
-
-(setq eldoc-idle-delay 0)
-(setq eldoc-echo-area-use-multiline-p t)
-
-(defun is-cljs-file (filename)
-  (when filename
-    (string-match "\\.cljs\\'" filename)))
-
-;; (add-hook 'buffer-list-update-hook
-;; 	  (lambda ()
-;; 	    (if (is-cljs-file buffer-file-name)
-;;                 (company-flx-mode -1)
-;; 	      (company-flx-mode +1))))
-
-;; GLOBAL MODES
-(ivy-mode 1)
-(setq ivy-use-virtual-buffers t)
-(setq ivy-count-format "(%d/%d) ")
-(setq ivy-re-builders-alist
-      '((swiper . ivy--regex)
-	(counsel-ag . ivy--regex-plus)
-	(t . ivy--regex-fuzzy)))
-
-(ivy-add-actions
- 'ivy-switch-buffer
- '(("k" kill-buffer "kill")))
-
-(define-key ivy-minibuffer-map (kbd "C-j") #'ivy-immediate-done)
-(define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
-
-(add-hook 'after-init-hook #'global-flycheck-mode)
-(add-hook 'after-init-hook 'display-line-numbers-mode)
-(add-hook 'after-init-hook 'global-company-mode)
-(add-hook 'after-init-hook 'rvm-use-default)
-(add-hook 'after-init-hook 'show-paren-mode)
-(add-hook 'after-init-hook 'which-key-mode)
-(add-hook 'after-init-hook 'rainbow-delimiters-mode)
-(add-hook 'after-init-hook 'global-magit-file-mode)
-
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
-
-(add-hook 'after-init-hook 'projectile-global-mode)
-(projectile-mode +1)
-(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-(when (featurep 'ivy)
-  (setq projectile-completion-system 'ivy))
-
-(key-chord-define-global "fj" 'avy-goto-word-1)
-(key-chord-define-global "jf" 'avy-goto-word-1)
-(key-chord-mode 1)
-
-;; ELISP, ESHELL and IELM MODES
-(add-hook 'emacs-lisp-mode-hook 'highlight-defined-mode)
-
-(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-(add-hook 'ielm-mode-hook 'paredit-mode)
-(add-hook 'eshell-mode-hook 'paredit-mode)
-
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'eshell-mode-hook 'turn-on-eldoc-mode)
-
-;; CLOJURE and CIDER MODES
-(add-hook 'clojure-mode-hook 'paredit-mode)
-(add-hook 'cider-repl-mode-hook 'paredit-mode)
-
-(add-hook 'cider-repl-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'clojure-mode-hook 'turn-on-eldoc-mode)
-
-(add-hook 'clojure-mode-hook
-	  (lambda ()
-	    (clj-refactor-mode 1)
-	    (yas-minor-mode 1)
-	    (cljr-add-keybindings-with-prefix "C-c C-m")))
-
-(eval-after-load 'clojure-mode
+(with-eval-after-load 'clojure-mode
   '(define-clojure-indent
      (wrap-result 'defun)
      (handle-error 'defun)
@@ -214,6 +112,122 @@ There are two things you can do about this warning:
      (ANY 2)
      (context 2)))
 
+(use-package clojure-mode
+  :ensure t
+  :commands 'clojure-mode)
+
+(use-package cider
+  :ensure t)
+
+(use-package clj-refactor
+  :ensure t
+  :hook ((clojure-mode) . clj-refactor-mode))
+
+(use-package flycheck-clj-kondo
+  :ensure t
+  :ensure-system-package
+  (clj-kondo . "brew install borkdude/brew/clj-kondo"))
+
+(use-package eldoc
+  :ensure t
+  :hook ((clojure-mode
+          emacs-lisp-mode
+          ielm-mode
+          eshell-mode
+          cider-repl-mode) . turn-on-eldoc-mode)
+  :config
+  (setq eldoc-idle-delay 0)
+  (setq eldoc-echo-area-use-multiline-p t))
+
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
+(add-to-list 'auto-mode-alist '("\\.spec\\'" . groovy-mode))
+(add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+
+(tool-bar-mode 0)
+
+(add-to-list 'default-frame-alist
+             '(font . "Inconsolata 16"))
+
+(set-frame-font "Inconsolata 16")
+
+(doom-modeline-mode 1)
+(load-theme 'gruvbox-dark-hard)
+(global-hl-line-mode +1)
+
+(with-eval-after-load 'magit-status
+  (define-key magit-status-mode-map (kbd "M-1") nil)
+  (define-key magit-status-mode-map (kbd "M-2") nil)
+  (define-key magit-status-mode-map (kbd "M-3") nil)
+  (define-key magit-status-mode-map (kbd "M-4") nil))
+
+
+(defun is-cljs-file (filename)
+  (when filename
+    (string-match "\\.cljs\\'" filename)))
+
+(add-hook 'buffer-list-update-hook
+	  (lambda ()
+	    (if (is-cljs-file buffer-file-name)
+                (company-flx-mode -1)
+	      (company-flx-mode +1))))
+
+;; GLOBAL MODES
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq ivy-count-format "(%d/%d) ")
+(setq ivy-re-builders-alist
+      '((swiper . ivy--regex)
+	(counsel-ag . ivy--regex-plus)
+	(t . ivy--regex-fuzzy)))
+
+(ivy-add-actions
+ 'ivy-switch-buffer
+ '(("k" kill-buffer "kill")))
+
+(define-key ivy-minibuffer-map (kbd "C-j") #'ivy-immediate-done)
+(define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
+
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'after-init-hook 'display-line-numbers-mode)
+(add-hook 'after-init-hook 'rvm-use-default)
+(add-hook 'after-init-hook 'show-paren-mode)
+(add-hook 'after-init-hook 'which-key-mode)
+(add-hook 'after-init-hook 'rainbow-delimiters-mode)
+(add-hook 'after-init-hook 'global-magit-file-mode)
+
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+
+(add-hook 'after-init-hook 'projectile-global-mode)
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(when (featurep 'ivy)
+  (setq projectile-completion-system 'ivy))
+
+(key-chord-define-global "fj" 'avy-goto-word-1)
+(key-chord-define-global "jf" 'avy-goto-word-1)
+(key-chord-mode 1)
+
+;; ELISP, ESHELL and IELM MODES
+(add-hook 'emacs-lisp-mode-hook 'highlight-defined-mode)
+
+(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+(add-hook 'ielm-mode-hook 'paredit-mode)
+(add-hook 'eshell-mode-hook 'paredit-mode)
+
+;; CLOJURE and CIDER MODES
+(add-hook 'clojure-mode-hook 'paredit-mode)
+(add-hook 'cider-repl-mode-hook 'paredit-mode)
+
+(add-hook 'clojure-mode-hook
+	  (lambda ()
+	    (yas-minor-mode 1)
+	    (cljr-add-keybindings-with-prefix "C-c C-m")))
 
 ;; JS Modes
 (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
@@ -229,13 +243,6 @@ There are two things you can do about this warning:
 (define-key tern-mode-keymap (kbd "M-,") nil)
 (add-hook 'js2-mode-hook 'electric-pair-mode)
 (add-hook 'js2-mode-hook 'aggressive-indent-mode)
-
-;; Elixir modes
-(add-hook 'elixir-mode-hook
-          (lambda ()
-            (smartparens-mode)
-            (add-hook 'before-save-hook 'elixir-format nil t)))
-
 
 ;; Ruby modes
 (add-hook 'ruby-mode-hook (lambda ()
@@ -260,7 +267,6 @@ There are two things you can do about this warning:
 			      (aggressive-indent-mode)))
 
 ;; CUSTOM KEY BINDINGS
-(global-set-key (kbd "S-SPC") 'company-complete)
 (global-set-key (kbd "C-;") 'er/expand-region)
 
 (global-set-key (kbd "M-n") 'forward-paragraph)
