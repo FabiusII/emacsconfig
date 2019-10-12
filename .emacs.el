@@ -29,7 +29,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (auto-package-update use-package lsp-ui company-lsp lsp-mode markdown-mode rubocop ruby-electric ruby-test-mode treemacs-projectile flycheck-clj-kondo json-mode kibit-helper amx counsel ivy doom-modeline all-the-icons-dired sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode)))
+    (enh-ruby-mode auto-package-update use-package lsp-ui company-lsp lsp-mode markdown-mode rubocop ruby-electric ruby-test-mode treemacs-projectile flycheck-clj-kondo json-mode kibit-helper amx counsel ivy doom-modeline all-the-icons-dired sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode)))
  '(safe-local-variable-values
    (quote
     ((cider-ns-refresh-after-fn . "integrant.repl/resume")
@@ -158,14 +158,14 @@ There are two things you can do about this warning:
   :ensure t
   :hook
   ((js2-mode
-   ruby-mode
-   groovy-mode
-   web-mode) . aggressive-indent-mode))
+    enh-ruby-mode-hook
+    groovy-mode
+    web-mode) . aggressive-indent-mode))
 
 (use-package rvm
   :ensure t
   :hook
-  ((ruby-mode) . rvm-activate-corresponding-ruby))
+  ((enh-ruby-mode) . rvm-activate-corresponding-ruby))
 
 (add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
 (add-to-list 'auto-mode-alist '("\\.spec\\'" . groovy-mode))
@@ -174,6 +174,8 @@ There are two things you can do about this warning:
 (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+(add-to-list 'auto-mode-alist
+             '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
 
 (tool-bar-mode 0)
 
@@ -220,6 +222,7 @@ There are two things you can do about this warning:
 (define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'after-init-hook #'rvm-use-default)
 (add-hook 'after-init-hook 'display-line-numbers-mode)
 (add-hook 'after-init-hook 'show-paren-mode)
 (add-hook 'after-init-hook 'rainbow-delimiters-mode)
@@ -283,7 +286,7 @@ There are two things you can do about this warning:
 
 ;; Ruby modes
 (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-(add-hook 'ruby-mode-hook
+(add-hook 'enh-ruby-mode-hook
           (lambda ()
             (lsp)
             (push 'company-lsp company-backends)
