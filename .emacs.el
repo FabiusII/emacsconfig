@@ -85,12 +85,13 @@ There are two things you can do about this warning:
 
 (use-package paredit
   :ensure t
+  :commands 'enable-paredit-mode
   :hook
-  ((clojure-mode
-    cider-repl-mode
+  ((cider-repl-mode
+    clojure-mode
     emacs-lisp-mode
     ielm-mode
-    eshell-mode) . paredit-mode))
+    eshell-mode) . enable-paredit-mode))
 
 (use-package clojure-mode
   :ensure t
