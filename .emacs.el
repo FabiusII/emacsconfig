@@ -29,7 +29,7 @@ There are two things you can do about this warning:
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (enh-ruby-mode auto-package-update use-package lsp-ui company-lsp lsp-mode markdown-mode rubocop ruby-electric ruby-test-mode treemacs-projectile flycheck-clj-kondo json-mode kibit-helper amx counsel ivy doom-modeline all-the-icons-dired sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit evil flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode)))
+    (enh-ruby-mode use-package company-lsp lsp-mode markdown-mode rubocop ruby-electric ruby-test-mode treemacs-projectile flycheck-clj-kondo json-mode kibit-helper amx ivy doom-modeline all-the-icons-dired sublime-themes twilight-theme solarized-theme rainbow-delimiters flatland-theme which-key aggressive-indent yaml-mode scss-mode rvm web-mode groovy-mode company-tern xref-js2 ag js2-refactor js2-mode org magit flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode)))
  '(safe-local-variable-values
    (quote
     ((cider-ns-refresh-after-fn . "integrant.repl/resume")
@@ -61,11 +61,6 @@ There are two things you can do about this warning:
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
-(use-package auto-package-update
-  :ensure t
-  :config
-  (auto-package-update-maybe))
-
 (use-package use-package-ensure-system-package
   :ensure t)
 
@@ -82,16 +77,6 @@ There are two things you can do about this warning:
   (company-flx-mode +1)
   (setq company-idle-delay 0.2)
   (global-company-mode))
-
-(use-package paredit
-  :ensure t
-  :commands 'enable-paredit-mode
-  :hook
-  ((cider-repl-mode
-    clojure-mode
-    emacs-lisp-mode
-    ielm-mode
-    eshell-mode) . enable-paredit-mode))
 
 (use-package clojure-mode
   :ensure t
@@ -113,6 +98,16 @@ There are two things you can do about this warning:
   (put-clojure-indent 'DELETE 2)
   (put-clojure-indent 'context 2))
 
+(use-package paredit
+  :ensure t
+  :commands enable-paredit-mode
+  :hook
+  ((cider-repl-mode
+    clojure-mode
+    emacs-lisp-mode
+    ielm-mode
+    eshell-mode) . enable-paredit-mode))
+
 (use-package cider
   :ensure t)
 
@@ -128,6 +123,7 @@ There are two things you can do about this warning:
   :commands lsp
   :config
   (add-to-list 'lsp-language-id-configuration '(clojure-mode . "clojure-mode"))
+  (add-to-list 'lsp-language-id-configuration '(clojurescript-mode . "clojure-mode"))
   (global-set-key (kbd "C-c r r") 'lsp-rename)
   (global-set-key (kbd "C-c f u") 'lsp-find-references)
   :init
@@ -290,7 +286,6 @@ There are two things you can do about this warning:
 	    (yas-minor-mode 1)))
 
 ;; Ruby modes
-(add-hook 'lsp-mode-hook 'lsp-ui-mode)
 (add-hook 'enh-ruby-mode-hook
           (lambda ()
             (lsp)
