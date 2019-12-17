@@ -12,10 +12,13 @@ Only the user can detect if the text is actually a reference to the symbol."
   (interactive)
   (let ((symbol (thing-at-point 'symbol)))
     (when symbol
-      (let* ((prompt (format "replace %s with: " symbol))
+      (let* ((old-point (point))
+             (prompt (format "replace %s with: " symbol))
 	     (replacement (read-string prompt))
 	     (scope (bounds-of-thing-at-point 'defun)))
-	(query-replace symbol replacement 'delimited (car scope) (cdr scope))))))
+        (goto-char (point-min))
+	(query-replace (regexp-quote symbol) replacement)
+        (goto-char old-point)))))
 
 (defun rename-in-buffer ()
   "Renaming a symbol in the current buffer based on its text content alone.
@@ -24,9 +27,12 @@ Only the user can detect if the text is actually a reference to the symbol."
   (interactive)
   (let ((symbol (thing-at-point 'symbol)))
     (when symbol
-      (let* ((prompt (format "replace %s with: " symbol))
+      (let* ((old-point (point))
+             (prompt (format "replace %s with: " symbol))
 	     (replacement (read-string prompt)))
-	(query-replace symbol replacement 'delimited (point-min) (point-max))))))
+        (goto-char (point-min))
+        (query-replace symbol replacement)
+        (goto-char old-point)))))
 
 (defun util/get-filenames (ag-hit-list result)
   "Recursively parse lines from AG-HIT-LIST to filenames into RESULT ."
