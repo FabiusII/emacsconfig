@@ -330,7 +330,7 @@ There are two things you can do about this warning:
 (setq split-height-threshold nil)
 (setq split-width-threshold 160)
 
-(load-file "~/repos/emacsconfig/util.el")
+(load-file "~/repos/emacsconfig/find-replace.el")
 (global-set-key (kbd "C-c r l") 'rename-local-symbol)
 (global-set-key (kbd "C-c r b") 'rename-in-buffer)
 (global-set-key (kbd "C-c r p") 'rename-in-project)
