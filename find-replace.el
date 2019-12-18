@@ -12,13 +12,10 @@ Only the user can detect if the text is actually a reference to the symbol."
   (interactive)
   (let ((symbol (thing-at-point 'symbol)))
     (when symbol
-      (let* ((old-point (point))
-             (prompt (format "replace %s with: " symbol))
+      (let* ((prompt (format "replace %s with: " symbol))
 	     (replacement (read-string prompt))
 	     (scope (bounds-of-thing-at-point 'defun)))
-        (goto-char (point-min))
-	(query-replace (regexp-quote symbol) replacement)
-        (goto-char old-point)))))
+	(query-replace (regexp-quote symbol) replacement 'delimited (car scope) (cdr scope))))))
 
 (defun rename-in-buffer ()
   "Renaming a symbol in the current buffer based on its text content alone.
