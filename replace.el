@@ -5,7 +5,7 @@
 ;;; Code:
 (setq lexical-binding t)
 
-(load-file "./find.el")
+(load-file "/Users/fabianhanselmann/repos/emacsconfig/find.el")
 
 (defun rename-local-symbol ()
   "Renaming a symbol in the current function based on its text content alone.
@@ -41,12 +41,6 @@ Only the user can detect if the text is actually a reference to the symbol."
     (query-replace symbol replacement)
     (save-buffer)
     (replace/open-and-replace-in-files (cdr files) symbol replacement)))
-
-(defun replace/special-character? (char)
-  "True if CHAR is not a word character."
-  (or (< char 65)
-      (and (> char 90) (< char 97))
-      (> char 122)))
 
 (defun rename-in-project ()
   "Renaming a symbol in the current buffer based on its text content alone.

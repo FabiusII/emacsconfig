@@ -1,3 +1,8 @@
+;;; package --- Summary
+;;; Commentary:
+;;; Text based search
+
+;;; Code:
 (setq lexical-binding t)
 
 (defun find/ns-name ()
@@ -14,6 +19,12 @@
     (insert "\n")
     (find/insert-results (car remaining) (cdr remaining))))
 
+(defun find/special-character? (char)
+  "True if CHAR is not a word character."
+  (or (< char 65)
+      (and (> char 90) (< char 97))
+      (> char 122)))
+
 (defun find/escape-special-characters (str &optional result idx)
   "Escape all characters with backslash that are not word characters.
 Required by `ag`
@@ -24,9 +35,9 @@ IDX the next character in STR"
         (result (or result "")))
     (if (> (length str) idx)
         (let ((ascii (aref str idx)))
-          (if (replace/special-character? ascii)
-              (replace/escape-special-characters str (concat result (string 92 ascii)) (+ idx 1))
-            (replace/escape-special-characters str (concat result (string ascii)) (+ idx 1))))
+          (if (find/special-character? ascii)
+              (find/escape-special-characters str (concat result (string 92 ascii)) (+ idx 1))
+            (find/escape-special-characters str (concat result (string ascii)) (+ idx 1))))
       result)))
 
 (defun find/get-filenames (ag-hit-list result)
@@ -42,14 +53,23 @@ IDX the next character in STR"
 (defun find/get-files (str)
   (let* ((ns-name (find/ns-name))
          (command (format "ag %s %s" (format "\"%s\"" (find/escape-special-characters str)) (projectile-project-root)))
-         (result-string (shell-command-to-string str))
+         (result-string (shell-command-to-string command))
          (result-string (string-trim result-string)))
-    (file-list (find/ag-result-string->list result-string))))
+    (find/ag-result-string->list result-string)))
+
+(defun read-file ()
+  (interactive)
+  (with-temp-buffer
+    (insert-file-contents "/Users/fabianhanselmann/repos/emacsconfig/find.el")
+    (let ((ns-form (thing-at-point 'defun)))
+      (message (format "test: %s" ns-form)))
+    (buffer-string)))
 
 (defun find/ag-result-string->list (result-string)
   "Turn a ag RESULT-STRING into a list of filenames."
-  (let ((lines (split-string result-string "\n")))
-    (find/get-filenames lines '())))
+  (let* ((lines (split-string result-string "\n"))
+         (files (find/get-filenames lines '())))
+    (seq-filter )))
 
 (defun find-reference ()
   (interactive)
