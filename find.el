@@ -50,7 +50,20 @@ IDX the next character in STR"
 	   (new-result (delete-dups new-result)))
       (find/get-filenames (cdr ag-hit-list) new-result))))
 
-(defun find/get-files (str)
+(defun find/namespace-imported? (ns)
+  (message "%s" (string-match (format "(ns .*\\(\n.*\\)*.*:require .*\\(\n.*\\)*.* :refer \\[.*%s.*\\]" ns) (buffer-string))))
+
+(defun namespace-imported? ()
+  (interactive)
+  (find/namespace-imported? (read-string "name")))
+
+(defun find/ag-result-string->list (result-string)
+  "Turn a ag RESULT-STRING into a list of filenames."
+  (let* ((lines (split-string result-string "\n"))
+         (files (find/get-filenames lines '())))
+    (seq-filter )))
+
+(defun find-files (str)
   (let* ((ns-name (find/ns-name))
          (command (format "ag %s %s" (format "\"%s\"" (find/escape-special-characters str)) (projectile-project-root)))
          (result-string (shell-command-to-string command))
@@ -65,16 +78,10 @@ IDX the next character in STR"
       (message (format "test: %s" ns-form)))
     (buffer-string)))
 
-(defun find/ag-result-string->list (result-string)
-  "Turn a ag RESULT-STRING into a list of filenames."
-  (let* ((lines (split-string result-string "\n"))
-         (files (find/get-filenames lines '())))
-    (seq-filter )))
-
 (defun find-reference ()
   (interactive)
   (let* ((symbol (thing-at-point 'symbol))
-         (file-list (find/get-files symbol))
+         (file-list (find-files symbol))
          (buffer (get-buffer-create "*References*")))
     (switch-to-buffer buffer)
     (find/insert-results (car file-list) (cdr file-list))))

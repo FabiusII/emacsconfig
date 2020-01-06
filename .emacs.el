@@ -280,6 +280,12 @@ There are two things you can do about this warning:
 
 ;; ELISP, ESHELL and IELM MODES
 (add-hook 'emacs-lisp-mode-hook 'highlight-defined-mode)
+(define-key emacs-lisp-mode-map (kbd "C-c C-k") '(lambda ()
+                                                   (interactive)
+                                                   (message "evaluating buffer")
+                                                   (eval-buffer)
+                                                   (message "buffer evaluated")))
+(define-key emacs-lisp-mode-map (kbd "C-c C-c") 'eval-defun)
 
 (add-hook 'clojure-mode-hook
 	  (lambda ()

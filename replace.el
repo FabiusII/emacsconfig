@@ -59,7 +59,7 @@ The latter must be installed on your system, not necessarily EMACS."
       (when symbol
 	(let* ((prompt (format "replace %s with: " symbol))
 	       (replacement (read-string prompt))
-	       (file-list (find/get-files symbol)))
+	       (file-list (find-files symbol)))
 	  (replace/open-and-replace-in-files file-list symbol replacement)
 	  (when old-buffer
 	    (switch-to-buffer old-buffer)
