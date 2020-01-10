@@ -5,13 +5,22 @@
 ;;; Code:
 (setq lexical-binding t)
 
-(defun find/ns-name ()
+(defun find/ns-of-file ()
   (let ((orig-point (point)))
     (goto-char (point-min))
     (forward-thing 'symbol 2)
     (let ((symbol (thing-at-point 'symbol)))
       (goto-char orig-point)
       symbol)))
+
+(defun find/ns-name (var-name)
+  (when (featurep 'cider)
+    (require 'cider-find)
+    (let ((orig-buffer (current-buffer))
+          (_ (call-interactively 'cider-find-var var-name))
+          (ns-name (find/ns-of-file)))
+      (switch-to-buffer orig-buffer)
+      ns-name)))
 
 (defun find/insert-results (current remaining)
   (when current
@@ -50,33 +59,39 @@ IDX the next character in STR"
 	   (new-result (delete-dups new-result)))
       (find/get-filenames (cdr ag-hit-list) new-result))))
 
-(defun find/namespace-imported? (ns)
-  (message "%s" (string-match (format "(ns .*\\(\n.*\\)*.*:require .*\\(\n.*\\)*.* :refer \\[.*%s.*\\]" ns) (buffer-string))))
+(defvar import-regex
+  (rx "(ns" (* anything) ":require" (+ (or "\s" "\n")) "[" (* anything) "%s" (+ (or "\s" "\n")) ":refer"
+      (+ (or "\s" "\n")) "["(* anything) "%s" (* anything) "]"))
 
-(defun namespace-imported? ()
-  (interactive)
-  (find/namespace-imported? (read-string "name")))
+(defun find/refer-regex (ns-name var-name)
+  (format import-regex ns-name var-name))
 
-(defun find/ag-result-string->list (result-string)
+(defun find/namespace-imported? (file-content ns-name var-name)
+  (string-match (find/refer-regex ns-name var-name) file-content))
+
+(defun find/read-file-content (file-name)
+  (with-temp-buffer
+    (insert-file-contents file-name)
+    (buffer-string)))
+
+(defun find/ag-result-string->list (result-string ns-name var-name)
   "Turn a ag RESULT-STRING into a list of filenames."
   (let* ((lines (split-string result-string "\n"))
          (files (find/get-filenames lines '())))
-    (seq-filter )))
+    (seq-filter (lambda (file-name)
+                  (find/namespace-imported?
+                   (find/read-file-content file-name)
+                   ns-name
+                   var-name))
+                (reverse files))))
 
-(defun find-files (str)
-  (let* ((ns-name (find/ns-name))
-         (command (format "ag %s %s" (format "\"%s\"" (find/escape-special-characters str)) (projectile-project-root)))
+(defun find-files (var)
+  (let* ((ns-name (find/ns-name var))
+         (search-string (format "\"%s\"" (find/escape-special-characters var)))
+         (command (format "ag %s %s" search-string (projectile-project-root)))
          (result-string (shell-command-to-string command))
          (result-string (string-trim result-string)))
-    (find/ag-result-string->list result-string)))
-
-(defun read-file ()
-  (interactive)
-  (with-temp-buffer
-    (insert-file-contents "/Users/fabianhanselmann/repos/emacsconfig/find.el")
-    (let ((ns-form (thing-at-point 'defun)))
-      (message (format "test: %s" ns-form)))
-    (buffer-string)))
+    (find/ag-result-string->list result-string ns-name var)))
 
 (defun find-reference ()
   (interactive)
