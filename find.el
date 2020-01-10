@@ -5,6 +5,8 @@
 ;;; Code:
 (setq lexical-binding t)
 
+(load-file "/Users/fabianhanselmann/repos/emacsconfig/util.el")
+
 (defun find/ns-of-file ()
   (let ((orig-point (point)))
     (goto-char (point-min))
@@ -15,7 +17,7 @@
 
 (defun find/ns-name (var-name)
   (when (featurep 'cider)
-    (require 'cider-find)
+    (require 'cider)
     (let ((orig-buffer (current-buffer))
           (_ (call-interactively 'cider-find-var var-name))
           (ns-name (find/ns-of-file)))
@@ -96,10 +98,15 @@ IDX the next character in STR"
 (defun find-reference ()
   (interactive)
   (let* ((symbol (thing-at-point 'symbol))
-         (file-list (find-files symbol))
-         (buffer (get-buffer-create "*References*")))
-    (switch-to-buffer buffer)
-    (find/insert-results (car file-list) (cdr file-list))))
+         (file-list (find-files symbol)))
+    (if (featurep 'ivy)
+        (progn (require 'ivy)
+               (ivy-read "References" file-list :action (lambda (e)
+                                                          (-> (find-file-noselect e)
+                                                              (pop-to-buffer-same-window)))))
+      (let ((buffer (get-buffer-create "*References*")))
+        (switch-to-buffer buffer)
+        (find/insert-results (car file-list) (cdr file-list))))))
 
 (provide 'find)
 ;;; find.el ends here
