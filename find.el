@@ -89,8 +89,27 @@ IDX the next character in STR"
       (string-match (find/refer-all-regex ns-name) file-content)))
 
 (defun find/namespace-aliased? (file-content ns-name)
-  (when (string-match (find/require-as-regex ns-name))
+  (when (string-match (find/require-as-regex ns-name) file-content)
     (match-string 1 file-content)))
+
+(defun find/aliased-usages (files-and-lines ns-name var-name)
+  (map-filter (lambda (file-name hit-lines)
+                (let ((file-content (find/read-file-content file-name)))
+                  (when-let (alias (find/namespace-aliased? file-content ns-name))
+                    (let* ((aliased-name (format "%s/%s" alias var-name))
+                           (file-lines (split-string file-content "\n")))
+                      (seq-filter (lambda (line-number)
+                                    (string-match aliased-name (nth line-number file-lines)))
+                                  hit-lines)))))
+              files-and-lines))
+
+(defun find/imported-usages (files-and-lines ns-name var-name)
+  (map-filter (lambda (file-name hit-lines)
+                (find/namespace-imported?
+                 (find/read-file-content file-name)
+                 ns-name
+                 var-name))
+              files-and-lines))
 
 (defun find/read-file-content (file-name)
   (with-temp-buffer
@@ -100,13 +119,10 @@ IDX the next character in STR"
 (defun find/ag-result-string->list (result-string ns-name var-name)
   "Turn a ag RESULT-STRING into a list of filenames."
   (let* ((lines (split-string result-string "\n"))
-         (files (find/get-filenames lines (a-hash-table))))
-    (seq-filter (lambda (file-name)
-                  (find/namespace-imported?
-                   (find/read-file-content file-name)
-                   ns-name
-                   var-name))
-                files)))
+         (hits (find/file-names-and-line-numbers lines (a-hash-table)))
+         (files (hash-table-keys hits))
+         (importing-files (find/imported-usages hits ns-name var-name)))
+    (map-merge 'hash-table importing-files (find/aliased-usages hits ns-name var-name))))
 
 (defun find-files (var)
   (let* ((ns-name (find/ns-name var))
