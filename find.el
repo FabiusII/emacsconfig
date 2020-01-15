@@ -51,25 +51,46 @@ IDX the next character in STR"
             (find/escape-special-characters str (concat result (string ascii)) (+ idx 1))))
       result)))
 
-(defun find/get-filenames (ag-hit-list result)
+(defun find/file-names-and-line-numbers (ag-hit-list result)
   "Recursively parse lines from AG-HIT-LIST to filenames into RESULT ."
   (if (not ag-hit-list)
       result
     (let* ((next-hit (car ag-hit-list))
-	   (file-name (car (split-string next-hit ":")))
-	   (new-result (cons file-name result))
-	   (new-result (delete-dups new-result)))
-      (find/get-filenames (cdr ag-hit-list) new-result))))
+           (name-and-line (split-string next-hit ":"))
+	   (file-name (car name-and-line))
+           (line-number (-> name-and-line (cdr) (car)))
+	   (new-result (a-hash-table file-name (cons line-number (gethash file-name result)))))
+      (find/file-names-and-line-numbers (cdr ag-hit-list) new-result))))
 
-(defvar import-regex
+(defun find/get-filenames (ag-hit-list result)
+  (hash-table-keys (find/file-names-and-line-numbers ag-hit-list result)))
+
+(defvar require-refer-regex
   (rx "(ns" (* anything) ":require" (+ (or "\s" "\n")) "[" (* anything) "%s" (+ (or "\s" "\n")) ":refer"
       (+ (or "\s" "\n")) "["(* anything) "%s" (* anything) "]"))
 
+(defvar refer-all-regex
+  (rx "(ns" (* anything) ":require" (+ (or "\s" "\n")) "[" (* anything) "%s" (+ (or "\s" "\n")) ":refer :all"))
+
+(defvar require-as-regex
+  "(ns\\(?:.\\|\n\\)*:require[\n ]+\\[\\(?:.\\|\n\\)*%s[\n ]+:as \\([a-zA-Z\-\.]+\\)")
+
 (defun find/refer-regex (ns-name var-name)
-  (format import-regex ns-name var-name))
+  (format require-refer-regex ns-name var-name))
+
+(defun find/refer-all-regex (ns-name)
+  (format refer-all-regex ns-name))
+
+(defun find/require-as-regex (ns-name)
+  (format require-as-regex ns-name))
 
 (defun find/namespace-imported? (file-content ns-name var-name)
-  (string-match (find/refer-regex ns-name var-name) file-content))
+  (or (string-match (find/refer-regex ns-name var-name) file-content)
+      (string-match (find/refer-all-regex ns-name) file-content)))
+
+(defun find/namespace-aliased? (file-content ns-name)
+  (when (string-match (find/require-as-regex ns-name))
+    (match-string 1 file-content)))
 
 (defun find/read-file-content (file-name)
   (with-temp-buffer
@@ -79,13 +100,13 @@ IDX the next character in STR"
 (defun find/ag-result-string->list (result-string ns-name var-name)
   "Turn a ag RESULT-STRING into a list of filenames."
   (let* ((lines (split-string result-string "\n"))
-         (files (find/get-filenames lines '())))
+         (files (find/get-filenames lines (a-hash-table))))
     (seq-filter (lambda (file-name)
                   (find/namespace-imported?
                    (find/read-file-content file-name)
                    ns-name
                    var-name))
-                (reverse files))))
+                files)))
 
 (defun find-files (var)
   (let* ((ns-name (find/ns-name var))
