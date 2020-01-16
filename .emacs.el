@@ -111,7 +111,9 @@ There are two things you can do about this warning:
     eshell-mode) . enable-paredit-mode))
 
 (use-package cider
-  :ensure t)
+  :ensure t
+  :config
+  (global-set-key (kbd "C-c f u") 'find-reference))
 
 (use-package clj-refactor
   :ensure t
@@ -119,20 +121,6 @@ There are two things you can do about this warning:
   :config
   (global-set-key (kbd "C-c n c") 'cljr-clean-ns)
   (global-set-key (kbd "C-c n a") 'cljr-add-missing-libspec))
-
-;; (use-package lsp-mode
-;;   :ensure t
-;;   :commands lsp
-;;   :config
-;;   (add-to-list 'lsp-language-id-configuration '(clojure-mode . "clojure-mode"))
-;;   (add-to-list 'lsp-language-id-configuration '(clojurescript-mode . "clojure-mode"))
-;;   (global-set-key (kbd "C-c r r") 'lsp-rename)
-;;   (global-set-key (kbd "C-c f u") 'lsp-find-references)
-;;   :init
-;;   (setq lsp-enable-indentation nil)
-;;   (add-hook 'clojure-mode-hook #'lsp)
-;;   (add-hook 'clojurec-mode-hook #'lsp)
-;;   (add-hook 'clojurescript-mode-hook #'lsp))
 
 (use-package flycheck-clj-kondo
   :ensure t
