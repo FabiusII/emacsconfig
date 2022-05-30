@@ -11,14 +11,14 @@
       (setq result (append (list (car form) result)
                            (cdr form))))))
 
-(defun ->hash-table (cons-list)
+(defun ->alist (cons-list)
   "Takes a list of cons cells and turns it into a hash-table"
   (cl-reduce (lambda (acc curr)
                  (if curr
                      (let* ((key (car curr))
-                            (existing (gethash key acc))
+                            (existing (plist-get acc key))
                             (value (cdr curr)))
-                       (a-assoc acc key (append value existing)))
+                       (plist-put (append value existing) acc key))
                    acc))
                cons-list
-               :initial-value (a-hash-table)))
+               :initial-value '()))

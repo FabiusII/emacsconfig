@@ -60,11 +60,12 @@ IDX the next character in STR"
            (name-and-line (split-string next-hit ":"))
 	   (file-name (car name-and-line))
            (line-number (-> name-and-line (cdr) (car) (string-to-number)))
-	   (new-result (a-assoc result file-name (cons line-number (gethash file-name result)))))
+           (existing-line-numbers (alist-get file-name result nil nil 'equal))
+           (line-numbers (cons line-number existing-line-numbers))
+           (new-result (cons
+                        (cons file-name line-numbers)
+                        (assoc-delete-all file-name result))))
       (find/file-names-and-line-numbers (cdr ag-hit-list) new-result))))
-
-(defun find/get-filenames (ag-hit-list result)
-  (hash-table-keys (find/file-names-and-line-numbers ag-hit-list result)))
 
 (defvar require-refer-regex
   (rx "(ns" (* anything) ":require" (+ (or "\s" "\n")) "[" (* anything) "%s" (+ (or "\s" "\n")) ":refer"
@@ -107,7 +108,7 @@ IDX the next character in STR"
                             (when actual-hits
                               (cons file-name actual-hits))))))
                     files-and-lines)))
-    (->hash-table cons-list)))
+    (->alist cons-list)))
 
 (defun find/imported-usages (files-and-lines ns-name var-name)
   (map-filter (lambda (file-name hit-lines)
@@ -130,12 +131,10 @@ IDX the next character in STR"
                   hash-table)
        (mapcan 'identity)))
 
-(defun find/ag-result-string->list (result-string ns-name var-name)
-  "Turn a ag RESULT-STRING into a list of filenames."
-  (let* ((lines (split-string result-string "\n"))
-         (hits (find/file-names-and-line-numbers lines (a-hash-table)))
-         (lines-in-importing-files (find/imported-usages hits ns-name var-name))
-         (lines-in-aliasing-files (find/aliased-usages hits ns-name var-name)))
+(defun find/ag-result-string->list (ag-hits ns-name var-name)
+  "Turn a AG-HITS list into a list of filenames."
+  (let* ((lines-in-importing-files (find/imported-usages ag-hits ns-name var-name))
+         (lines-in-aliasing-files (find/aliased-usages ag-hits ns-name var-name)))
     (-> (map-merge 'hash-table lines-in-importing-files lines-in-aliasing-files)
         (find/hash-table->list))))
 
@@ -144,8 +143,10 @@ IDX the next character in STR"
          (search-string (format "\"([a-zA-Z.-]+/)?%s\"" (find/escape-special-characters var)))
          (command (format "ag %s %s" search-string (projectile-project-root)))
          (result-string (shell-command-to-string command))
-         (result-string (string-trim result-string)))
-    (find/ag-result-string->list result-string ns-name var)))
+         (result-string (string-trim result-string))
+         (lines (split-string result-string "\n"))
+         (ag-hits (find/file-names-and-line-numbers (reverse lines) nil)))
+    (find/ag-result-string->list ag-hits ns-name var)))
 
 (defun find-reference ()
   (interactive)
