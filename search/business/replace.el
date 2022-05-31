@@ -5,13 +5,9 @@
 ;;; Code:
 (setq lexical-binding t)
 
-(load-file "/Users/fabianhanselmann/repos/emacsconfig/find.el")
+(load-file "/Users/fabianhanselmann/repos/emacsconfig/search/business/find.el")
 
-(defun rename-local-symbol ()
-  "Renaming a symbol in the current function based on its text content alone.
-Before renaming each single occurance, the user is asked for permission.
-Only the user can detect if the text is actually a reference to the symbol."
-  (interactive)
+(defun replace/rename-local-symbol (context)
   (let ((symbol (thing-at-point 'symbol)))
     (when symbol
       (let* ((prompt (format "replace %s with: " symbol))
@@ -19,11 +15,7 @@ Only the user can detect if the text is actually a reference to the symbol."
 	     (scope (bounds-of-thing-at-point 'defun)))
 	(query-replace (regexp-quote symbol) replacement 'delimited (car scope) (cdr scope))))))
 
-(defun rename-in-buffer ()
-  "Renaming a symbol in the current buffer based on its text content alone.
-Before renaming each single occurance, the user is asked for permission.
-Only the user can detect if the text is actually a reference to the symbol."
-  (interactive)
+(defun replace/rename-in-buffer (context)
   (let ((symbol (thing-at-point 'symbol)))
     (when symbol
       (let* ((old-point (point))
@@ -42,13 +34,7 @@ Only the user can detect if the text is actually a reference to the symbol."
     (save-buffer)
     (replace/open-and-replace-in-files (cdr files) symbol replacement)))
 
-(defun rename-in-project ()
-  "Renaming a symbol in the current buffer based on its text content alone.
-Before renaming each single occurance, the user is asked for permission.
-Only the user can detect if the text is actually a reference to the symbol.
-Requies and projectile and ag (aka the_silver_searcher).
-The latter must be installed on your system, not necessarily EMACS."
-  (interactive)
+(defun replace/rename-in-project (context)
   (when (and (featurep 'projectile)
 	     (featurep 'subr-x))
     (require 'projectile)

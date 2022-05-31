@@ -22,3 +22,6 @@
                    acc))
                cons-list
                :initial-value '()))
+
+(defun constantly (value)
+  (lambda (& _) value))

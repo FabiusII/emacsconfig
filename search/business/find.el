@@ -94,10 +94,10 @@ IDX the next character in STR"
   (when (string-match (find/require-as-regex ns-name) file-content)
     (match-string 1 file-content)))
 
-(defun find/aliased-usages (files-and-lines ns-name var-name)
+(defun find/aliased-usages (context files-and-lines ns-name var-name)
   (let ((cons-list (map-apply
                     (lambda (file-name hit-lines)
-                      (let ((file-content (find/read-file-content file-name)))
+                      (let ((file-content (funcall (plist-get context :read-file-content) file-name)))
                         (when-let (alias (find/namespace-aliased? file-content ns-name))
                           (let* ((aliased-name (format "%s/%s" alias var-name))
                                  (file-lines (split-string file-content "\n"))
@@ -110,18 +110,13 @@ IDX the next character in STR"
                     files-and-lines)))
     (->alist cons-list)))
 
-(defun find/imported-usages (files-and-lines ns-name var-name)
+(defun find/imported-usages (context files-and-lines ns-name var-name)
   (map-filter (lambda (file-name hit-lines)
                 (find/namespace-imported?
-                 (find/read-file-content file-name)
+                 (funcall (plist-get context :read-file-content) file-name)
                  ns-name
                  var-name))
               files-and-lines))
-
-(defun find/read-file-content (file-name)
-  (with-temp-buffer
-    (insert-file-contents file-name)
-    (buffer-string)))
 
 (defun find/hash-table->list (hash-table)
   (->> (map-apply (lambda (file lines)
@@ -131,10 +126,10 @@ IDX the next character in STR"
                   hash-table)
        (mapcan 'identity)))
 
-(defun find/ag-result-string->list (ag-hits ns-name var-name)
+(defun find/ag-result-string->list (context ag-hits ns-name var-name)
   "Turn a AG-HITS list into a list of filenames."
-  (let* ((lines-in-importing-files (find/imported-usages ag-hits ns-name var-name))
-         (lines-in-aliasing-files (find/aliased-usages ag-hits ns-name var-name)))
+  (let* ((lines-in-importing-files (find/imported-usages context ag-hits ns-name var-name))
+         (lines-in-aliasing-files (find/aliased-usages context ag-hits ns-name var-name)))
     (-> (map-merge 'hash-table lines-in-importing-files lines-in-aliasing-files)
         (find/hash-table->list))))
 
@@ -148,8 +143,7 @@ IDX the next character in STR"
          (ag-hits (find/file-names-and-line-numbers (reverse lines) nil)))
     (find/ag-result-string->list ag-hits ns-name var)))
 
-(defun find-reference ()
-  (interactive)
+(defun find/find-references (context)
   (let* ((symbol (thing-at-point 'symbol))
          (refs (find/references symbol)))
     (if (featurep 'ivy)
