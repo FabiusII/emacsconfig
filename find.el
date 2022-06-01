@@ -95,20 +95,19 @@ IDX the next character in STR"
     (match-string 1 file-content)))
 
 (defun find/aliased-usages (files-and-lines ns-name var-name)
-  (let ((cons-list (map-apply
-                    (lambda (file-name hit-lines)
-                      (let ((file-content (find/read-file-content file-name)))
-                        (when-let (alias (find/namespace-aliased? file-content ns-name))
-                          (let* ((aliased-name (format "%s/%s" alias var-name))
-                                 (file-lines (split-string file-content "\n"))
-                                 (actual-hits (seq-filter
-                                               (lambda (line-number)
-                                                 (string-match aliased-name (nth (- line-number 1) file-lines)))
-                                               hit-lines)))
-                            (when actual-hits
-                              (cons file-name actual-hits))))))
-                    files-and-lines)))
-    (->alist cons-list)))
+  (map-apply
+   (lambda (file-name hit-lines)
+     (let ((file-content (find/read-file-content file-name)))
+       (when-let (alias (find/namespace-aliased? file-content ns-name))
+         (let* ((aliased-name (format "%s/%s" alias var-name))
+                (file-lines (split-string file-content "\n"))
+                (actual-hits (seq-filter
+                              (lambda (line-number)
+                                (string-match aliased-name (nth (- line-number 1) file-lines)))
+                              hit-lines)))
+           (when actual-hits
+             (cons file-name actual-hits))))))
+   files-and-lines))
 
 (defun find/imported-usages (files-and-lines ns-name var-name)
   (map-filter (lambda (file-name hit-lines)
