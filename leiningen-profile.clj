@@ -1,6 +1,7 @@
 {:user {:plugins [;[cider/cider-nrepl "0.22.0-beta9"]
-                  [lein-kibit "0.1.7"]
-                  [lein-eftest "0.5.8"]]
+                  [lein-kibit "0.1.8"]
+                  [lein-eftest "0.5.8"]
+                  [venantius/yagni "0.1.7"]]
         :dependencies [[eftest "0.5.8"]
                        [org.clojure/tools.namespace "0.3.1"]]
         :injections [(require 'clojure.pprint)

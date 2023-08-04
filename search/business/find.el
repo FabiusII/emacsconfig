@@ -16,15 +16,6 @@
       (goto-char orig-point)
       symbol)))
 
-(defun find/ns-name (var-name)
-  (when (featurep 'cider)
-    (require 'cider)
-    (let ((orig-buffer (current-buffer))
-          (_ (call-interactively 'cider-find-var var-name))
-          (ns-name (find/ns-of-file)))
-      (switch-to-buffer orig-buffer)
-      ns-name)))
-
 (defun find/insert-results (current remaining)
   (when current
     (insert current)
@@ -132,19 +123,16 @@ IDX the next character in STR"
     (-> (map-merge 'hash-table lines-in-importing-files lines-in-aliasing-files)
         (find/hash-table->list))))
 
-(defun find/references (var)
-  (let* ((ns-name (find/ns-name var))
+(defun find/references (context var)
+  (let* ((ns-name (funcall (plist-get context 'ns-name ) var))
          (search-string (format "\"([a-zA-Z.-]+/)?%s\"" (find/escape-special-characters var)))
-         (command (format "ag %s %s" search-string (projectile-project-root)))
-         (result-string (shell-command-to-string command))
-         (result-string (string-trim result-string))
-         (lines (split-string result-string "\n"))
-         (ag-hits (find/file-names-and-line-numbers (reverse lines) nil)))
-    (find/ag-result-string->list ag-hits ns-name var)))
+         (hit-string (funcall (plist-get context 'grep-project) search-string))
+         (ag-hits (find/file-names-and-line-numbers hit-string  nil)))
+    (find/ag-result-string->list context ag-hits ns-name var)))
 
 (defun find/find-references (context)
   (let* ((symbol (thing-at-point 'symbol))
-         (refs (find/references symbol)))
+         (refs (find/references context symbol)))
     (if (featurep 'ivy)
         (progn (require 'ivy)
                (ivy-read "References" refs :action

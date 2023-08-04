@@ -41,3 +41,27 @@
   (let* ((context (list 'read-file-content #'read-file-content-mock))
          (result (find/ag-result-string->list context files-and-lines "oms.util" "select-keys-or-nil")))
     (should (equal result expected-references))))
+
+(defvar grep-result-list-mock
+  '("/Users/fabianhanselmann/repos/rewe-order-service/src/oms/db/order.clj:997:                                 (merge (select-keys-or-nil (ff-info-key li)"
+    "/Users/fabianhanselmann/repos/rewe-order-service/src/oms/db/order.clj:162:      (select-keys-or-nil [:id :lineItemType :productId :articleId :nan :gtin :title :price"
+    "/Users/fabianhanselmann/repos/rewe-order-service/src/oms/db/order.clj:154:      (select-keys-or-nil [:salutation :title :firstName :lastName :street :addressId"
+    "/Users/fabianhanselmann/repos/rewe-order-service/src/oms/db/order.clj:130:               (select-keys-or-nil [:id :merchant :subOrderValue :deliveryType :channel"
+    "/Users/fabianhanselmann/repos/rewe-order-service/src/oms/db/order.clj:47:                              select-keys-or-nil"
+    "/Users/fabianhanselmann/repos/rewe-order-service/src/oms/util.clj:176:(defn select-keys-or-nil"))
+
+(defun grep-mock (_) grep-result-list-mock)
+
+(defun ns-name-mock (_) "oms.util")
+
+(defvar expected-references '("/Users/fabianhanselmann/repos/rewe-order-service/src/oms/db/order.clj:53"
+                              "/Users/fabianhanselmann/repos/rewe-order-service/src/oms/db/order.clj:134"
+                              "/Users/fabianhanselmann/repos/rewe-order-service/src/oms/business/order.clj:158"
+                              "/Users/fabianhanselmann/repos/rewe-order-service/src/oms/business/db_to_order.clj:3"))
+
+(ert-deftest test-find/references ()
+  (let* ((context (list 'read-file-content #'read-file-content-mock
+                        'grep-project #'grep-mock
+                        'ns-name #'ns-name-mock))
+         (result (find/references context "select-keys-or-nil")))
+    (should (equal result expected-references))))
