@@ -29,7 +29,7 @@ There are two things you can do about this warning:
  '(column-number-mode t)
  '(initial-frame-alist '((fullscreen . maximized)))
  '(package-selected-packages
-   '(telephone-line super-save graphql-mode clomacs darcula-theme enh-ruby-mode use-package company-lsp markdown-mode rubocop ruby-electric ruby-test-mode flycheck-clj-kondo json-mode kibit-helper amx ivy all-the-icons-dired flatland-theme which-key yaml-mode scss-mode ag org magit flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))
+   '(backward-forward telephone-line super-save graphql-mode clomacs darcula-theme enh-ruby-mode use-package company-lsp markdown-mode rubocop ruby-electric ruby-test-mode flycheck-clj-kondo json-mode kibit-helper amx ivy all-the-icons-dired flatland-theme which-key yaml-mode scss-mode ag org magit flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))
  '(safe-local-variable-values
    '((cider-ns-refresh-after-fn . "integrant.repl/resume")
      (cider-ns-refresh-before-fn . "integrant.repl/suspend"))))
@@ -54,6 +54,13 @@ There are two things you can do about this warning:
 (use-package swiper :ensure t)
 (use-package counsel :ensure t)
 (use-package ag :ensure t)
+
+(use-package backward-forward
+  :ensure t
+  :config
+  (backward-forward-mode t)
+  (global-set-key (kbd "M-[") 'backward-forward-previous-location)
+  (global-set-key (kbd "M-]") 'backward-forward-next-location))
 
 (use-package magit
   :ensure t
@@ -259,11 +266,7 @@ There are two things you can do about this warning:
 (global-set-key (kbd "M-1") 'windmove-left)
 (global-set-key (kbd "M-2") 'windmove-right)
 
-(global-set-key (kbd "M-[") 'pop-global-mark)
-(global-set-key (kbd "M-]") 'exchange-point-and-mark)
-
 (global-set-key (kbd "M-z") 'undo)
-(global-set-key (kbd "M-Z") 'undo-tree-redo)
 
 (global-set-key (kbd "M-c") 'kill-ring-save)
 (global-set-key (kbd "M-x") 'kill-region)
