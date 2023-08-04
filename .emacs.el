@@ -29,7 +29,7 @@ There are two things you can do about this warning:
  '(column-number-mode t)
  '(initial-frame-alist '((fullscreen . maximized)))
  '(package-selected-packages
-   '(graphql-mode clomacs darcula-theme enh-ruby-mode use-package company-lsp markdown-mode rubocop ruby-electric ruby-test-mode flycheck-clj-kondo json-mode kibit-helper amx ivy all-the-icons-dired flatland-theme which-key yaml-mode scss-mode web-mode ag org magit flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))
+   '(telephone-line super-save graphql-mode clomacs darcula-theme enh-ruby-mode use-package company-lsp markdown-mode rubocop ruby-electric ruby-test-mode flycheck-clj-kondo json-mode kibit-helper amx ivy all-the-icons-dired flatland-theme which-key yaml-mode scss-mode ag org magit flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))
  '(safe-local-variable-values
    '((cider-ns-refresh-after-fn . "integrant.repl/resume")
      (cider-ns-refresh-before-fn . "integrant.repl/suspend"))))
@@ -49,14 +49,30 @@ There are two things you can do about this warning:
   (require 'use-package))
 
 ;; Custom Settings
-(require 'ag)
-(require 'magit)
-(require 'projectile)
-(require 'ivy)
-(require 'swiper)
-(require 'counsel)
-
 (setq-default indent-tabs-mode nil)
+
+(use-package swiper :ensure t)
+(use-package counsel :ensure t)
+(use-package ag :ensure t)
+
+(use-package magit
+  :ensure t
+  :config
+  (define-key magit-status-mode-map (kbd "M-1") nil)
+  (define-key magit-status-mode-map (kbd "M-2") nil)
+  (define-key magit-status-mode-map (kbd "M-3") nil)
+  (define-key magit-status-mode-map (kbd "M-4") nil))
+
+(use-package super-save
+  :ensure t
+  :config
+  (super-save-mode +1)
+  (setq super-save-auto-save-when-idle t)
+  (setq auto-save-default nil))
+
+(use-package telephone-line
+  :ensure t
+  :config (telephone-line-mode 1))
 
 (use-package exec-path-from-shell
   :ensure t)
@@ -100,7 +116,15 @@ There are two things you can do about this warning:
   (put-clojure-indent 'POST 2)
   (put-clojure-indent 'PUT 2)
   (put-clojure-indent 'DELETE 2)
-  (put-clojure-indent 'context 2))
+  (put-clojure-indent 'context 2)
+  (add-hook 'clojure-mode-hook (lambda () (yas-minor-mode 1))))
+
+(use-package key-chord
+  :config
+  (key-chord-define-global "fj" 'avy-goto-word-1)
+  (key-chord-define-global "jf" 'avy-goto-word-1)
+  (setq key-chord-safety-interval-forward 0.1)
+  (key-chord-mode 1))
 
 (use-package paredit
   :ensure t
@@ -146,12 +170,54 @@ There are two things you can do about this warning:
   :config
   (which-key-mode))
 
+(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq ivy-re-builders-alist '((swiper . ivy--regex)
+	                        (counsel-ag . ivy--regex-plus)
+	                        (t . ivy--regex-fuzzy)))
+  (ivy-add-actions 'ivy-switch-buffer '(("k" kill-buffer "kill")))
+  (define-key ivy-minibuffer-map (kbd "C-j") #'ivy-immediate-done)
+  (define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
+  (define-key ivy-minibuffer-map (kbd "M-v") 'yank)
+  (global-set-key (kbd "C-s") 'swiper)
+  (global-set-key (kbd "M-k") 'counsel-M-x)
+  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+  (global-set-key (kbd "C-c k") 'counsel-ag)
+  (global-set-key (kbd "C-S-s") 'counsel-ag)
+  (global-set-key (kbd "C-c i") 'ivy-resume)
+  (global-set-key (kbd "C-c m") 'counsel-imenu))
 
-(add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode))
-(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+(use-package projectile
+  :ensure t
+  :config
+  (add-hook 'after-init-hook 'projectile-global-mode)
+  (projectile-mode +1)
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (global-set-key (kbd "M-t") 'projectile-find-file)
+  (when (featurep 'ivy)
+    (setq projectile-completion-system 'ivy)))
+
+(use-package scss-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode)))
+
+(use-package yaml-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+
+(use-package all-the-icons :ensure t)
+(use-package all-the-icons-dired
+  :ensure t
+  :config
+  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+
 (tool-bar-mode 0)
 
 (add-to-list 'default-frame-alist
@@ -165,49 +231,11 @@ There are two things you can do about this warning:
 (global-hl-line-mode +1)
 (global-so-long-mode 1)
 
-(with-eval-after-load 'magit-status
-  (define-key magit-status-mode-map (kbd "M-1") nil)
-  (define-key magit-status-mode-map (kbd "M-2") nil)
-  (define-key magit-status-mode-map (kbd "M-3") nil)
-  (define-key magit-status-mode-map (kbd "M-4") nil))
-
 ;; GLOBAL MODES
-(ivy-mode 1)
-(setq ivy-use-virtual-buffers t)
-(setq ivy-count-format "(%d/%d) ")
-(setq ivy-re-builders-alist
-      '((swiper . ivy--regex)
-	(counsel-ag . ivy--regex-plus)
-	(t . ivy--regex-fuzzy)))
-
-(ivy-add-actions
- 'ivy-switch-buffer
- '(("k" kill-buffer "kill")))
-
-(define-key ivy-minibuffer-map (kbd "C-j") #'ivy-immediate-done)
-(define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
-(define-key ivy-minibuffer-map (kbd "M-v") 'yank)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'after-init-hook 'display-line-numbers-mode)
 (add-hook 'after-init-hook 'show-paren-mode)
-;(add-hook 'after-init-hook 'global-magit-file-mode)
-
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
-
-(add-hook 'after-init-hook 'projectile-global-mode)
-(projectile-mode +1)
-(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-(when (featurep 'ivy)
-  (setq projectile-completion-system 'ivy))
-
-(key-chord-define-global "fj" 'avy-goto-word-1)
-(key-chord-define-global "jf" 'avy-goto-word-1)
-(setq key-chord-safety-interval-forward 0.1)
-(key-chord-mode 1)
-
-
 
 ;; ELISP, ESHELL and IELM MODES
 (add-hook 'emacs-lisp-mode-hook 'highlight-defined-mode)
@@ -217,16 +245,6 @@ There are two things you can do about this warning:
                                                     (eval-buffer)
                                                     (message "buffer evaluated")))
 (define-key emacs-lisp-mode-map (kbd "C-c C-c") 'eval-defun)
-
-(add-hook 'clojure-mode-hook
-	  (lambda ()
-	    (yas-minor-mode 1)))
-
-;; Webmodes
-(add-hook 'web-mode-hook 'electric-pair-mode)
-
-;; Groovy
-(add-hook 'groovy-mode-hook 'electric-pair-mode)
 
 ;; CUSTOM KEY BINDINGS
 (global-set-key (kbd "C-;") 'er/expand-region)
@@ -253,7 +271,7 @@ There are two things you can do about this warning:
 
 (global-set-key (kbd "C-`") 'scroll-up)
 (global-set-key (kbd "M-`") 'scroll-down)
-(global-set-key (kbd "M-S-`") 'tmm-menubar)
+(global-set-key (kbd "M-~") 'tmm-menubar)
 
 (global-set-key (kbd "C-<tab>") 'ivy-switch-buffer)
 
@@ -262,20 +280,6 @@ There are two things you can do about this warning:
     (save-some-buffers t))
 
 (add-hook 'focus-out-hook 'save-all)
-
-;; enable only when projectile is active
-(when (featurep 'projectile)
-  (global-set-key (kbd "M-t") 'projectile-find-file))
-
-;; ivy bindings
-(when (featurep 'ivy)
-  (global-set-key (kbd "C-s") 'swiper)
-  (global-set-key (kbd "M-k") 'counsel-M-x)
-  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-  (global-set-key (kbd "C-c k") 'counsel-ag)
-  (global-set-key (kbd "C-S-s") 'counsel-ag)
-  (global-set-key (kbd "C-c i") 'ivy-resume)
-  (global-set-key (kbd "C-c m") 'counsel-imenu))
 
 (setq mac-command-modifier 'meta)
 (setq org-log-done t)
@@ -290,10 +294,6 @@ There are two things you can do about this warning:
 (load-file "~/repos/emacsconfig/eshellrc.el")
 
 (put 'upcase-region 'disabled nil)
-
-;;; TODO
-;;; jump to references in references search buffer on click
-;;; line search forward and backward with continuation
 
 (provide '.emacs)
 ;;; .emacs.el ends here
