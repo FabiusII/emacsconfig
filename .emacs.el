@@ -186,7 +186,7 @@ There are two things you can do about this warning:
   (global-set-key (kbd "C-s") 'swiper)
   (global-set-key (kbd "M-k") 'counsel-M-x)
   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-  (global-set-key (kbd "C-c k") 'counsel-ag)
+  (global-set-key (kbd "C-c k") 'projectile-ag)
   (global-set-key (kbd "C-S-s") 'counsel-ag)
   (global-set-key (kbd "C-c i") 'ivy-resume)
   (global-set-key (kbd "C-c m") 'counsel-imenu))
@@ -227,6 +227,7 @@ There are two things you can do about this warning:
 
 ;(load-theme 'gruvbox-light-hard t)
 (load-theme 'gruvbox-dark-soft t)
+(scroll-bar-mode -1)
 
 (global-hl-line-mode +1)
 (global-so-long-mode 1)
