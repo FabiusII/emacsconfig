@@ -5,7 +5,7 @@
 ;;; Code:
 (setq lexical-binding t)
 
-(load-file "/Users/fabianhanselmann/repos/emacsconfig/search/business/find.el")
+(load-file "~/repos/emacsconfig/search/business/find.el")
 
 (defun replace/rename-local-symbol (context)
   (let ((symbol (thing-at-point 'symbol)))

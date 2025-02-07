@@ -1,5 +1,8 @@
 ;; Package Settings
 (require 'package)
+
+(defmacro comment (&rest sexp) nil)
+
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                     (not (gnutls-available-p))))
        (proto (if no-ssl "http" "https")))
@@ -29,7 +32,7 @@ There are two things you can do about this warning:
  '(column-number-mode t)
  '(initial-frame-alist '((fullscreen . maximized)))
  '(package-selected-packages
-   '(backward-forward telephone-line super-save graphql-mode clomacs darcula-theme enh-ruby-mode use-package company-lsp markdown-mode rubocop ruby-electric ruby-test-mode flycheck-clj-kondo json-mode kibit-helper amx ivy all-the-icons-dired flatland-theme which-key yaml-mode scss-mode ag org magit flycheck company-flx key-chord avy highlight-defined projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))
+   '(lsp-ui lsp-metals lsp-mode scala-mode gh-md copilot copilot-chat ace-window highlight-defined backward-forward telephone-line super-save graphql-mode clomacs darcula-theme enh-ruby-mode use-package company-lsp markdown-mode rubocop ruby-electric ruby-test-mode flycheck-clj-kondo json-mode kibit-helper amx ivy all-the-icons-dired flatland-theme which-key yaml-mode scss-mode ag org magit flycheck company-flx key-chord avy projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))
  '(safe-local-variable-values
    '((cider-ns-refresh-after-fn . "integrant.repl/resume")
      (cider-ns-refresh-before-fn . "integrant.repl/suspend"))))
@@ -42,8 +45,12 @@ There are two things you can do about this warning:
 
 (setq ring-bell-function 'ignore)
 (setq visible-bell 1)
+(setq ;use-package-always-defer t
+      use-package-always-ensure t
+      backup-directory-alist `((".*" . ,temporary-file-directory))
+      auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
-(add-to-list 'custom-theme-load-path "/Users/fabianhanselmann/repos/emacsconfig/themes/")
+(add-to-list 'custom-theme-load-path "~/repos/emacsconfig/themes/")
 
 (eval-when-compile
   (require 'use-package))
@@ -51,19 +58,23 @@ There are two things you can do about this warning:
 ;; Custom Settings
 (setq-default indent-tabs-mode nil)
 
-(use-package swiper :ensure t)
-(use-package counsel :ensure t)
-(use-package ag :ensure t)
+(use-package swiper)
+(use-package counsel)
+(use-package ag)
+(use-package expand-region)
+(use-package avy)
 
 (use-package backward-forward
-  :ensure t
   :config
   (backward-forward-mode t)
   (global-set-key (kbd "M-[") 'backward-forward-previous-location)
   (global-set-key (kbd "M-]") 'backward-forward-next-location))
 
+(use-package scss-mode
+  :config
+  (setq-default css-indent-offset 2))
+
 (use-package magit
-  :ensure t
   :config
   (define-key magit-status-mode-map (kbd "M-1") nil)
   (define-key magit-status-mode-map (kbd "M-2") nil)
@@ -71,27 +82,22 @@ There are two things you can do about this warning:
   (define-key magit-status-mode-map (kbd "M-4") nil))
 
 (use-package super-save
-  :ensure t
   :config
   (super-save-mode +1)
   (setq super-save-auto-save-when-idle t)
   (setq auto-save-default nil))
 
 (use-package telephone-line
-  :ensure t
   :config (telephone-line-mode 1))
 
-(use-package exec-path-from-shell
-  :ensure t)
+(use-package exec-path-from-shell)
 
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
-(use-package use-package-ensure-system-package
-  :ensure t)
+(use-package use-package-ensure-system-package)
 
 (use-package company
-  :ensure t
   :bind
   (("S-SPC" . 'company-complete)
    :map company-active-map
@@ -102,10 +108,10 @@ There are two things you can do about this warning:
   :config
   ;; (company-flx-mode +1)
   (setq company-idle-delay 0.2)
+  (setq company-lsp-provider :capf)
   (global-company-mode))
 
 (use-package clojure-mode
-  :ensure t
   :commands 'clojure-mode
   :config
   (put-clojure-indent 'wrap-result 'defun)
@@ -134,7 +140,6 @@ There are two things you can do about this warning:
   (key-chord-mode 1))
 
 (use-package paredit
-  :ensure t
   :commands enable-paredit-mode
   :hook
   ((cider-repl-mode
@@ -144,25 +149,26 @@ There are two things you can do about this warning:
     eshell-mode) . enable-paredit-mode))
 
 (use-package cider
-  :ensure t
   :config
+  (setq cider-dynamic-indentation nil)
+  (setq cider-clojure-cli-parameters "-A:dev")
   (global-set-key (kbd "C-c f u") 'find-reference)
-  (global-set-key (kbd "C-c C-o") 'cider-repl-clear-buffer))
+  (global-set-key (kbd "C-c C-e") 'cider-repl-clear-buffer))
 
 (use-package clj-refactor
-  :ensure t
   :hook ((clojure-mode) . clj-refactor-mode)
   :config
   (global-set-key (kbd "C-c n c") 'cljr-clean-ns)
   (global-set-key (kbd "C-c n a") 'cljr-add-missing-libspec))
 
+(use-package flycheck
+  :init (global-flycheck-mode))
+
 (use-package flycheck-clj-kondo
-  :ensure t
   :ensure-system-package
   (clj-kondo . "brew install borkdude/brew/clj-kondo"))
 
 (use-package eldoc
-  :ensure t
   :hook ((clojure-mode
           emacs-lisp-mode
           ielm-mode
@@ -173,12 +179,10 @@ There are two things you can do about this warning:
   (setq eldoc-echo-area-use-multiline-p t))
 
 (use-package which-key
-  :ensure t
   :config
   (which-key-mode))
 
 (use-package ivy
-  :ensure t
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
@@ -199,7 +203,6 @@ There are two things you can do about this warning:
   (global-set-key (kbd "C-c m") 'counsel-imenu))
 
 (use-package projectile
-  :ensure t
   :config
   (add-hook 'after-init-hook 'projectile-global-mode)
   (projectile-mode +1)
@@ -210,20 +213,62 @@ There are two things you can do about this warning:
     (setq projectile-completion-system 'ivy)))
 
 (use-package scss-mode
-  :ensure t
   :config
   (add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode)))
 
 (use-package yaml-mode
-  :ensure t
   :config
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 
-(use-package all-the-icons :ensure t)
+(use-package all-the-icons)
 (use-package all-the-icons-dired
-  :ensure t
   :config
   (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+
+(use-package copilot)
+(use-package copilot-chat)
+
+(use-package scala-mode
+  :defer t
+  :interpreter ("scala" . scala-mode))
+
+(use-package sbt-mode
+  :defer t
+  :commands sbt-start sbt-command
+  :config
+  (substitute-key-definition 'minibuffer-complete-word
+                             'self-insert-command
+                             minibuffer-local-completion-map)
+  (setq sbt:program-options '("-Dsbt.supershell=false")))
+
+(use-package lsp-mode
+  :defer t
+  ;; Optional - enable lsp-mode automatically in scala files
+  ;; You could also swap out lsp for lsp-deffered in order to defer loading
+  :hook  (scala-mode . lsp)
+         (lsp-mode . lsp-lens-mode)
+  :config
+  ;; Uncomment following section if you would like to tune lsp-mode performance according to
+  ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+  ;; (setq gc-cons-threshold 100000000) ;; 100mb
+  ;; (setq read-process-output-max (* 1024 1024)) ;; 1mb
+  ;; (setq lsp-idle-delay 0.500)
+  ;; (setq lsp-log-io nil)
+  ;; (setq lsp-completion-provider :capf)
+  (setq lsp-prefer-flymake nil)
+  ;; Makes LSP shutdown the metals server when all buffers in the project are closed.
+  ;; https://emacs-lsp.github.io/lsp-mode/page/settings/mode/#lsp-keep-workspace-alive
+  (setq lsp-keep-workspace-alive nil))
+
+(use-package lsp-metals :defer t)
+(use-package lsp-ui :defer t)
+(use-package yasnippet :defer t)
+(use-package posframe :defer t)
+(use-package dap-mode
+  :defer t
+  :hook
+  (lsp-mode . dap-mode)
+  (lsp-mode . dap-ui-mode))
 
 (tool-bar-mode 0)
 
@@ -232,8 +277,8 @@ There are two things you can do about this warning:
 
 (set-frame-font "Inconsolata 17")
 
-;(load-theme 'gruvbox-light-hard t)
-(load-theme 'gruvbox-dark-soft t)
+(load-theme 'gruvbox-light-hard t)
+;(load-theme 'gruvbox-dark-soft t)
 (scroll-bar-mode -1)
 
 (global-hl-line-mode +1)

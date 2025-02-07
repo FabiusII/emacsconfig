@@ -5,7 +5,7 @@
 ;;; Code:
 (setq lexical-binding t)
 
-(load-file "/Users/fabianhanselmann/repos/emacsconfig/search/business/util.el")
+(load-file "~/repos/emacsconfig/search/business/util.el")
 (require 'cl-lib)
 
 (defun find/ns-of-file ()

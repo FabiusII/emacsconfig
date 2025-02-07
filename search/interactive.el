@@ -3,6 +3,7 @@
 (load-file "./business/replace.el")
 (load-file "./int/context.el")
 (load-file "./business/find.el")
+(load-file "./edn-json.el")
 
 (defun rename-local-symbol ()
   "Renaming a symbol in the current function based on its text content alone.
@@ -31,3 +32,12 @@ The latter must be installed on your system, not necessarily EMACS."
 (defun find-reference ()
   (interactive)
   (find/find-references int/context))
+
+(defun json->edn ()
+  (interactive)
+  (shell-command-on-region
+   (region-beginning)
+   (region-end)
+   "jet --pretty --keywordize keyword --from json --to edn"
+   (current-buffer)
+   t))

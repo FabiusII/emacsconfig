@@ -1,4 +1,4 @@
-(load-file "../business/util.el")
+(load-file "~/repos/emacsconfig/search/business/util.el")
 
 (defun int/read-file-content (file-name)
   (with-temp-buffer
