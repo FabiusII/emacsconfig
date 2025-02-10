@@ -109,7 +109,7 @@ IDX the next character in STR"
               files-and-lines))
 
 (defun find/hash-table->list (hash-table)
-  (->> (map-apply (lambda (file lines)
+  (-->> (map-apply (lambda (file lines)
                     (seq-map (lambda (line)
                                (format "%s:%s" file line))
                              lines))
