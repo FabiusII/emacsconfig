@@ -50,7 +50,7 @@ IDX the next character in STR"
     (let* ((next-hit (car ag-hit-list))
            (name-and-line (split-string next-hit ":"))
 	   (file-name (car name-and-line))
-           (line-number (-> name-and-line (cdr) (car) (string-to-number)))
+           (line-number (--> name-and-line (cdr) (car) (string-to-number)))
            (existing-line-numbers (alist-get file-name result nil nil 'equal))
            (line-numbers (cons line-number existing-line-numbers))
            (new-result (cons
@@ -110,18 +110,18 @@ IDX the next character in STR"
 
 (defun find/hash-table->list (hash-table)
   (-->> (map-apply (lambda (file lines)
-                    (seq-map (lambda (line)
-                               (format "%s:%s" file line))
-                             lines))
-                  hash-table)
+                     (seq-map (lambda (line)
+                                (format "%s:%s" file line))
+                              lines))
+                   hash-table)
        (mapcan 'identity)))
 
 (defun find/ag-result-string->list (context ag-hits ns-name var-name)
   "Turn a AG-HITS list into a list of filenames."
   (let* ((lines-in-importing-files (find/imported-usages context ag-hits ns-name var-name))
          (lines-in-aliasing-files (find/aliased-usages context ag-hits ns-name var-name)))
-    (-> (map-merge 'hash-table lines-in-importing-files lines-in-aliasing-files)
-        (find/hash-table->list))))
+    (--> (map-merge 'hash-table lines-in-importing-files lines-in-aliasing-files)
+         (find/hash-table->list))))
 
 (defun find/references (context var)
   (let* ((ns-name (funcall (plist-get context 'ns-name ) var))

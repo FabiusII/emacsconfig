@@ -12,13 +12,33 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
-   ["#3c3836" "#fb4934" "#b8bb26" "#fabd2f" "#83a598" "#d3869b" "#8ec07c" "#ebdbb2"])
+   ["#3c3836" "#fb4934" "#b8bb26" "#fabd2f" "#83a598" "#d3869b" "#8ec07c"
+    "#ebdbb2"])
  '(column-number-mode t)
  '(initial-frame-alist '((fullscreen . maximized)))
  '(package-selected-packages
-   '(lsp-ui lsp-metals lsp-mode scala-mode gh-md copilot copilot-chat ace-window highlight-defined backward-forward telephone-line super-save graphql-mode clomacs darcula-theme enh-ruby-mode use-package company-lsp markdown-mode rubocop ruby-electric ruby-test-mode flycheck-clj-kondo json-mode kibit-helper amx ivy all-the-icons-dired flatland-theme which-key yaml-mode scss-mode ag org magit flycheck company-flx key-chord avy projectile clj-refactor expand-region company gruvbox-theme paredit cider clojure-mode))
+   '(lsp-ui lsp-metals lsp-mode scala-mode gh-md copilot copilot-chat
+            ace-window highlight-defined backward-forward
+            telephone-line super-save graphql-mode clomacs
+            darcula-theme enh-ruby-mode use-package company-lsp
+            markdown-mode rubocop ruby-electric ruby-test-mode
+            flycheck-clj-kondo json-mode kibit-helper amx ivy
+            all-the-icons-dired flatland-theme which-key yaml-mode ag
+            org magit flycheck company-flx key-chord avy projectile
+            clj-refactor expand-region company gruvbox-theme paredit
+            cider clojure-mode))
  '(safe-local-variable-values
-   '((cider-ns-refresh-after-fn . "integrant.repl/resume")
+   '((sql-connection-alist
+      (oms-prod (sql-product 'postgres)
+                (sql-database
+                 "postgresql://h_fabianhanselmann:hhXEkVFkH4vrrIGQBVY3@pgdb-standby.ecommerce-prod.db.rewe.cloud:5432/reweorderservice"))
+      (oms-pre (sql-product 'postgres)
+               (sql-database
+                "postgresql://h_fabianhanselmann:q9XET3JVnnkLHmOGs70S@pgdb-standby.ecommerce-pre.db.rewe.cloud:5432/reweorderservice"))
+      (oms-int (sql-product 'postgres)
+               (sql-database
+                "postgresql://h_fabianhanselmann:S53KwfFojbzCHkRrb8pQ@pgdb-standby.ecommerce-int.db.rewe.cloud:5432/reweorderservice")))
+     (cider-ns-refresh-after-fn . "integrant.repl/resume")
      (cider-ns-refresh-before-fn . "integrant.repl/suspend"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -53,10 +73,6 @@
   (backward-forward-mode t)
   (global-set-key (kbd "M-[") 'backward-forward-previous-location)
   (global-set-key (kbd "M-]") 'backward-forward-next-location))
-
-(use-package scss-mode
-  :config
-  (setq-default css-indent-offset 2))
 
 (use-package magit
   :config
@@ -196,10 +212,6 @@
   (when (featurep 'ivy)
     (setq projectile-completion-system 'ivy)))
 
-(use-package scss-mode
-  :config
-  (add-to-list 'auto-mode-alist '("\\.sass\\'" . scss-mode)))
-
 (use-package yaml-mode
   :config
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
@@ -249,6 +261,8 @@
   (lsp-mode . dap-mode)
   (lsp-mode . dap-ui-mode))
 
+;; There seems to be a bug with tool bar mode, so first enable, then disable
+(tool-bar-mode 1)
 (tool-bar-mode 0)
 
 (add-to-list 'default-frame-alist
@@ -280,7 +294,6 @@
 
 ;; CUSTOM KEY BINDINGS
 (global-set-key (kbd "C-;") 'er/expand-region)
-(global-set-key (kbd "C-w") 'er/expand-region)
 (global-set-key (kbd "C-S-w") 'er/contract-region)
 (global-set-key (kbd "C-x C-b") 'ivy-switch-buffer)
 
@@ -294,8 +307,6 @@
 
 (global-set-key (kbd "M-c") 'kill-ring-save)
 (global-set-key (kbd "M-x") 'kill-region)
-(global-set-key (kbd "M-v") 'yank)
-(global-set-key (kbd "C-M-v") 'yank-pop)
 
 (global-set-key (kbd "C-`") 'scroll-up)
 (global-set-key (kbd "M-`") 'scroll-down)
