@@ -17,28 +17,15 @@
  '(column-number-mode t)
  '(initial-frame-alist '((fullscreen . maximized)))
  '(package-selected-packages
-   '(lsp-ui lsp-metals lsp-mode scala-mode gh-md copilot copilot-chat
-            ace-window highlight-defined backward-forward
-            telephone-line super-save graphql-mode clomacs
-            darcula-theme enh-ruby-mode use-package company-lsp
-            markdown-mode rubocop ruby-electric ruby-test-mode
-            flycheck-clj-kondo json-mode kibit-helper amx ivy
-            all-the-icons-dired flatland-theme which-key yaml-mode ag
-            org magit flycheck company-flx key-chord avy projectile
-            clj-refactor expand-region company gruvbox-theme paredit
-            cider clojure-mode))
+   '(ag all-the-icons-dired backward-forward chatgpt-shell clj-refactor
+        company copilot copilot-chat counsel exec-path-from-shell
+        expand-region flycheck-clj-kondo gh-md gruvbox-theme
+        haskell-mode highlight-defined html-to-hiccup key-chord
+        lsp-metals lsp-ui magit peg pg projectile sbt-mode scss-mode
+        super-save telephone-line use-package-ensure-system-package
+        which-key yaml-mode))
  '(safe-local-variable-values
-   '((sql-connection-alist
-      (oms-prod (sql-product 'postgres)
-                (sql-database
-                 "postgresql://h_fabianhanselmann:hhXEkVFkH4vrrIGQBVY3@pgdb-standby.ecommerce-prod.db.rewe.cloud:5432/reweorderservice"))
-      (oms-pre (sql-product 'postgres)
-               (sql-database
-                "postgresql://h_fabianhanselmann:q9XET3JVnnkLHmOGs70S@pgdb-standby.ecommerce-pre.db.rewe.cloud:5432/reweorderservice"))
-      (oms-int (sql-product 'postgres)
-               (sql-database
-                "postgresql://h_fabianhanselmann:S53KwfFojbzCHkRrb8pQ@pgdb-standby.ecommerce-int.db.rewe.cloud:5432/reweorderservice")))
-     (cider-ns-refresh-after-fn . "integrant.repl/resume")
+   '((cider-ns-refresh-after-fn . "integrant.repl/resume")
      (cider-ns-refresh-before-fn . "integrant.repl/suspend"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -261,16 +248,12 @@
   (lsp-mode . dap-mode)
   (lsp-mode . dap-ui-mode))
 
-;; There seems to be a bug with tool bar mode, so first enable, then disable
-(tool-bar-mode 1)
-(tool-bar-mode 0)
-
 (add-to-list 'default-frame-alist
              '(font . "Inconsolata 17"))
 
 (set-frame-font "Inconsolata 17")
 
-(load-theme 'gruvbox-light-hard t)
+;(load-theme 'gruvbox-light-hard t)
 ;(load-theme 'gruvbox-dark-soft t)
 (scroll-bar-mode -1)
 
@@ -333,6 +316,8 @@
 (load-file "~/repos/emacsconfig/eshellrc.el")
 
 (put 'upcase-region 'disabled nil)
+(tool-bar-mode 1)
+(tool-bar-mode 0)
 
 (provide '.emacs)
 ;;; .emacs.el ends here
